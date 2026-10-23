@@ -3,7 +3,7 @@ import * as z from 'zod';
 import { BtsUnavailableError } from './cdp.js';
 import { type LibraryClient, LibraryError, type LivesetInfo, type PatchesInfo, type SlotInfo } from './library.js';
 import {
-  checkName, findRef, isEmptyPatchName, LIVESET_NAME_MAX, MAX_PATCHES, PATCH_NAME_MAX, type Ref, resolveRef,
+  checkName, findRef, isEmptyPatchName, isNumberRef, LIVESET_NAME_MAX, MAX_PATCHES, PATCH_NAME_MAX, type Ref, resolveRef,
 } from './library-refs.js';
 import { readTsl, resolveTslPath, writeTsl } from './tsl-file.js';
 import { parseSlot, slotName } from './slots.js';
@@ -68,11 +68,6 @@ export function createLibraryHandlers({ lib, home }: LibraryToolDeps) {
     return { info: { id: -1, name, patches: [] }, created: true, create: () => lib.createLiveset(name) };
   }
 
-  async function livesetOrCreate(ref: Ref): Promise<{ index: number; info: LivesetInfo; created: boolean }> {
-    const t = await livesetOrNew(ref);
-    return { index: await t.create(), info: t.info, created: t.created };
-  }
-
   const patchRef = (info: LivesetInfo, ref: Ref) => resolveRef(info.patches, ref, `patch in "${info.name}"`);
 
   return {
@@ -116,6 +111,9 @@ export function createLibraryHandlers({ lib, home }: LibraryToolDeps) {
     }),
 
     livesetDelete: ({ liveset: ref }: { liveset: Ref }) => guard(async () => {
+      if (isNumberRef(ref)) {
+        throw new LibraryError("Deleting needs the liveset's exact name (numbers shift when livesets are added); use katana_liveset_list to get it.");
+      }
       const { index, info } = await liveset(ref);
       await lib.deleteLiveset(index);
       return ok({ deleted: info.name });
@@ -124,7 +122,7 @@ export function createLibraryHandlers({ lib, home }: LibraryToolDeps) {
     livesetAddCurrent: ({ liveset: ref, name, position, overwrite }: { liveset: Ref; name: string; position?: number; overwrite?: boolean }) =>
       guard(async () => {
         const n = checkName(name, PATCH_NAME_MAX, 'patch');
-        const t = await livesetOrCreate(ref);
+        const t = await livesetOrNew(ref);
         const rows = t.info.patches.length;
         const pos = position === undefined ? rows : position - 1;
         if (!Number.isInteger(pos) || pos < 0 || pos > rows) {
@@ -136,7 +134,8 @@ export function createLibraryHandlers({ lib, home }: LibraryToolDeps) {
         if (replaced !== null && overwrite !== true) {
           throw new LibraryError(`Patch ${pos + 1} of "${t.info.name}" is "${replaced}". ${ASK}`);
         }
-        await lib.addCurrent(t.index, n, pos);
+        const index = await t.create();
+        await lib.addCurrent(index, n, pos);
         return ok({ liveset: t.info.name, created: t.created, position: pos + 1, name: n, replaced });
       }),
 
@@ -189,7 +188,17 @@ export function createLibraryHandlers({ lib, home }: LibraryToolDeps) {
 
     livesetImport: ({ path, name }: { path: string; name?: string }) => guard(async () => {
       const t = await readTsl(path);
-      const n = name === undefined ? null : checkName(name, LIVESET_NAME_MAX, 'liveset');
+      let n: string;
+      if (name !== undefined) {
+        n = checkName(name, LIVESET_NAME_MAX, 'liveset');
+      } else {
+        try {
+          n = checkName(t.name, LIVESET_NAME_MAX, 'liveset');
+        } catch (e) {
+          if (!(e instanceof LibraryError)) throw e;
+          throw new LibraryError(`${e.message.replace(/^The liveset name/, 'The liveset name in the file').replace(/\.$/, '')}; pass name to import it under another name.`);
+        }
+      }
       const index = await lib.importJson(t.json, n);
       const l = (await lib.livesets())[index];
       return ok({ liveset: index + 1, name: l.name, patches: l.patches });
@@ -240,7 +249,7 @@ export function registerLibraryTools(server: McpServer, deps: LibraryToolDeps): 
 
   server.registerTool('katana_liveset_delete', {
     description: 'Delete a liveset from the library. Confirm with the user first; it cannot be undone.',
-    inputSchema: { liveset: livesetRefSchema },
+    inputSchema: { liveset: z.string().describe('Exact liveset name (not a number)') },
   }, args => h.livesetDelete(args));
 
   server.registerTool('katana_liveset_add_current', {

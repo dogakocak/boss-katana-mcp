@@ -55,8 +55,17 @@ describe('library tools: livesets', () => {
     const h = createLibraryHandlers({ lib });
     expect(json(await h.livesetCreate({ name: 'NEW' }))).toEqual({ liveset: 1, name: 'NEW' });
     expect(json(await h.livesetRename({ liveset: 'gig', name: 'GIG 24' }))).toEqual({ liveset: 1, name: 'GIG 24' });
-    expect(json(await h.livesetDelete({ liveset: 2 }))).toEqual({ deleted: 'LIVESET 1' });
+    expect(json(await h.livesetDelete({ liveset: 'LIVESET 1' }))).toEqual({ deleted: 'LIVESET 1' });
     expect(lib.log).toEqual([['createLiveset', 'NEW'], ['renameLiveset', 0, 'GIG 24'], ['deleteLiveset', 1]]);
+  });
+
+  it('refuses to delete by number, since numbers shift when livesets are added', async () => {
+    const lib = fakeLib();
+    const h = createLibraryHandlers({ lib });
+    expect(text(await h.livesetDelete({ liveset: 2 }))).toBe(
+      "Deleting needs the liveset's exact name (numbers shift when livesets are added); use katana_liveset_list to get it.",
+    );
+    expect(lib.log).toEqual([]);
   });
 
   it('appends the current tone, creating the liveset when the name is new', async () => {
@@ -65,6 +74,14 @@ describe('library tools: livesets', () => {
     expect(json(await h.livesetAddCurrent({ liveset: 'GIG', name: 'OUTRO' }))).toMatchObject({ liveset: 'GIG', created: false, position: 4, replaced: null });
     expect(json(await h.livesetAddCurrent({ liveset: 'BLUES NIGHT', name: 'SLOW' }))).toMatchObject({ liveset: 'BLUES NIGHT', created: true, position: 1 });
     expect(lib.log).toEqual([['addCurrent', 0, 'OUTRO', 3], ['createLiveset', 'BLUES NIGHT'], ['addCurrent', 0, 'SLOW', 0]]);
+  });
+
+  it('validates addCurrent position before creating a new liveset, so a bad position leaves no orphan', async () => {
+    const lib = fakeLib();
+    const h = createLibraryHandlers({ lib });
+    expect(text(await h.livesetAddCurrent({ liveset: 'NEW ONE', name: 'X', position: 3 })))
+      .toContain('is outside liveset "NEW ONE"');
+    expect(lib.log.some(l => l[0] === 'createLiveset')).toBe(false);
   });
 
   it('refuses to replace a liveset patch unless asked', async () => {
@@ -159,6 +176,19 @@ describe('library tools: livesets', () => {
     const out = json(await createLibraryHandlers({ lib }).livesetImport({ path: file, name: 'GIG COPY' }));
     expect(lib.log).toEqual([['importJson', tsl, 'GIG COPY']]);
     expect(out).toEqual({ liveset: 1, name: 'GIG', patches: ['INTRO', 'VERSE', 'SOLO'] });
+  });
+
+  it('refuses to import under the file\'s own name when BTS cannot store it, unless given a name', async () => {
+    const dir = mkdtempSync(join(tmpdir(), 'katana-imp-'));
+    const file = join(dir, 'bad.tsl');
+    const tsl = JSON.stringify({ name: 'Çok Güzel', formatRev: '0000', device: 'KATANA Gen3', data: [[{ memo: '', paramSet: {} }]] });
+    writeFileSync(file, tsl, 'utf8');
+    const lib = fakeLib();
+    const out = text(await createLibraryHandlers({ lib }).livesetImport({ path: file }));
+    expect(out).toBe(
+      'The liveset name in the file "Çok Güzel" has characters the KATANA cannot store; use plain ASCII letters, digits and punctuation; pass name to import it under another name.',
+    );
+    expect(lib.log).toEqual([]);
   });
 });
 
