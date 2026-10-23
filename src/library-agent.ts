@@ -8,7 +8,8 @@
  *
  * BTS globals used: librarianCommonInfo, librarianServices, LibrarianModel, PatchInfo, Parameter,
  * ProductSetting, patchModelController, patchMIDIController, patchDOMController, modelInfo,
- * librarianDynamicDOMController, currentMIDIConnect.
+ * librarianDynamicDOMController, currentMIDIConnect, util, ADDRESS_CONST, hex2, midiConnectionController,
+ * setupKnobModFxTargetList, btsDOMController, $.
  */
 export const LIBRARY_BODY = String.raw`(function () {
   var k = window.__katanaClaude;
@@ -51,6 +52,75 @@ export const LIBRARY_BODY = String.raw`(function () {
       });
     };
   }
+
+  var STEP_MS = 60000, TRANSFER_MS = 180000;
+
+  function requireAmp() {
+    if (window.currentMIDIConnect == null) throw new Error('No KATANA is connected. Connect it with katana_connect first.');
+  }
+
+  function requireIdle() {
+    if (librarian().timerId) throw new Error('BOSS TONE STUDIO is transferring data; try again in a moment.');
+  }
+
+  function withTimeout(p, what, ms) {
+    return new Promise(function (resolve, reject) {
+      var t = setTimeout(function () { reject(new Error(what + ' did not finish within ' + ms / 1000 + 's.')); }, ms);
+      p.then(function (v) { clearTimeout(t); resolve(v); }, function (e) { clearTimeout(t); reject(e); });
+    });
+  }
+
+  // BTS's loading popup around a long amp transfer, closed whatever the outcome.
+  function withLoading(p) {
+    if (window.btsDOMController) btsDOMController.openLoading();
+    function close() { if (window.btsDOMController) btsDOMController.closeLoading(); }
+    return p.then(function (v) { close(); return v; }, function (e) { close(); throw e; });
+  }
+
+  // Runs one Librarian read/write/temporaryWrite and settles on its 'end' / 'timeout' broadcast.
+  function runLibrarian(msg, start) {
+    var lib = librarian();
+    return new Promise(function (resolve, reject) {
+      var obs = {
+        notify: function (m, arg) {
+          if (m === 'librarian_cancel') { lib.removeObserver(obs); reject(new Error(msg + ' was cancelled in BOSS TONE STUDIO.')); return; }
+          if (m !== msg) return;
+          if (arg === 'end') { lib.removeObserver(obs); resolve(); }
+          else if (arg === 'timeout') { lib.removeObserver(obs); reject(new Error(msg + ': the amp did not reply')); }
+        }
+      };
+      lib.addObserver(obs);
+      start(lib);
+    });
+  }
+
+  function waitReply(address, value, step) {
+    return new Promise(function (resolve, reject) {
+      util.waitForDT1Reply(address, value, {
+        isSucceeded: function (msg) { return msg.indexOf(util.convert2AddrStr(address)) >= 0; },
+        success: function () { resolve(); },
+        error: function () { reject(new Error(step + ': the amp did not reply')); }
+      });
+    });
+  }
+
+  function sendExport(multi, preview, unmute, row) {
+    return new Promise(function (resolve, reject) {
+      patchMIDIController.sendCommandExport(multi, preview, unmute, row, function () { resolve(); },
+        function () { reject(new Error('CMDID_EXPORT: the amp did not reply')); });
+    });
+  }
+
+  // Same split as librarianServices.exportInst: one row, two rows, or "multiple" (7F7F).
+  function exportCommand(rows) {
+    if (rows.length > 2) return sendExport(true, true, true, undefined);
+    if (rows.length === 2) {
+      return sendExport(false, true, false, rows[0]).then(function () { return sendExport(false, false, true, rows[1]); });
+    }
+    return sendExport(false, true, true, rows[0]);
+  }
+
+  function unmuteSoon() { setTimeout(function () { patchMIDIController.sendCommandPreviewMute(0); }, 10); }
 
   function patches() {
     var cfg = modelInfo.config(), names = patchModelController.getUserPatchNames(), slots = [];
@@ -125,13 +195,103 @@ export const LIBRARY_BODY = String.raw`(function () {
     return addLiveset(l);
   }
 
+  // What BTS's #user-patch-select-menu change handler does.
+  function selectPatch(row) {
+    requireAmp(); requireIdle();
+    patchModelController.updateCurrentPatch(row);
+    patchDOMController.updateCurrentPatchDOM();
+    patchMIDIController.updateCurrentPatch(row);
+    return { current: row, name: String(patchModelController.getPatchName(row) || '').trim() };
+  }
+
+  // The WRITE dialog's sequence (patchMIDIController.sendPatchName + writePatch) without its dialogs.
+  function writePatch(row, name) {
+    requireAmp(); requireIdle();
+    var flow = Promise.resolve().then(function () {
+      patchMIDIController.sendPatchName(name);
+      return waitReply(ADDRESS_CONST.COMMAND.PATCH_WRITE, '00' + hex2(row), 'PATCH_WRITE');
+    }).then(function () {
+      return exportCommand([row]);
+    }).then(function () {
+      var names = patchModelController.getUserPatchNames();
+      names[row] = name;
+      patchModelController.updateUserPatchNames(names);
+      patchDOMController.updatePatchSelectPage();
+      patchDOMController.updateCurrentPatchDOM();
+      $('#user-patch-select-menu').trigger('elf-change', row);
+      return { row: row, name: name };
+    });
+    return withLoading(withTimeout(flow, 'Writing the patch', STEP_MS));
+  }
+
+  // A LIBRARIAN patch click: preview-mute, temporaryWrite, mirror into the edit buffer, re-read, unmute.
+  function loadPatch(i, p) {
+    requireAmp(); requireIdle();
+    var l = livesetAt(i), cell = l.cell(0, p), cfg = librarian().config;
+    if (!cell) throw new Error('No patch at index ' + p + ' in liveset "' + l.name + '"');
+    var flow = patchMIDIController.sendCommandPreviewMute(1).then(function () {
+      return runLibrarian('librarian_temporaryWrite', function (lib) { lib.temporaryWrite(cell, 0); });
+    }).then(function () {
+      cfg.blockSet.forEach(function (bid) { Parameter.setdata(cfg.temporarySet[bid], cell.paramSet[bid]); });
+      return new Promise(function (resolve) { midiConnectionController.readEditor([0], resolve, resolve); });
+    }).then(function () {
+      if (typeof setupKnobModFxTargetList === 'function') setupKnobModFxTargetList();
+      return { liveset: l.name, patch: patchName(cell) };
+    });
+    return withTimeout(flow, 'Loading the patch', STEP_MS)
+      .then(function (v) { unmuteSoon(); return v; }, function (e) { unmuteSoon(); throw e; });
+  }
+
+  // librarianServices.exportInst without the read-back and dialogs: copy cells into the amp's
+  // PATCH(n) buffers, write those rows, send the export command, refresh slot names.
+  function toAmp(i, patchIdxs, rows) {
+    requireAmp(); requireIdle();
+    var l = livesetAt(i);
+    var cells = patchIdxs.map(function (p) {
+      var c = l.cell(0, p);
+      if (!c) throw new Error('No patch at index ' + p + ' in liveset "' + l.name + '"');
+      return c;
+    });
+    if (cells.length !== rows.length || !rows.length) throw new Error('Patches and slots must be the same, non-zero count.');
+    rows.forEach(function (row, n) { info().instLiveset.replace(0, row, [cells[n]]); });
+    var flow = runLibrarian('librarian_write', function (lib) { lib.write(rows.slice()); })
+      .then(function () { return exportCommand(rows); })
+      .then(function () { return new Promise(function (resolve) { patchMIDIController.fetchPatchNames(resolve, resolve); }); })
+      .then(function () {
+        var cur = patchModelController.getCurrentPatchNum();
+        if (rows.indexOf(cur) >= 0) patchMIDIController.updateCurrentPatch(cur);
+        return { rows: rows, names: cells.map(patchName) };
+      });
+    return withLoading(withTimeout(flow, 'Writing the liveset to the amp', TRANSFER_MS));
+  }
+
+  // librarianServices.importInst (append mode): read the rows from the amp, copy them into the liveset.
+  function fromAmp(rows, i) {
+    requireAmp(); requireIdle();
+    var l = livesetAt(i);
+    if (l.rows(0) + rows.length > info().maxPatchNum) throw new Error('Liveset "' + l.name + '" would exceed ' + info().maxPatchNum + ' patches.');
+    var flow = runLibrarian('librarian_read', function (lib) { lib.read(rows.slice()); }).then(function () {
+      var cells = info().instLiveset.copy(0, rows.slice());
+      l.replace(0, l.rows(0), cells);
+      save(l);
+      redraw();
+      return { liveset: l.name, added: cells.map(patchName) };
+    });
+    return withLoading(withTimeout(flow, 'Reading patches from the amp', TRANSFER_MS));
+  }
+
   k.lib = {
     patches: wrap(patches),
+    selectPatch: wrap(selectPatch),
+    writePatch: wrap(writePatch),
     livesets: wrap(livesets),
     createLiveset: wrap(createLiveset),
     renameLiveset: wrap(renameLiveset),
     deleteLiveset: wrap(deleteLiveset),
     addCurrent: wrap(addCurrent),
+    loadPatch: wrap(loadPatch),
+    toAmp: wrap(toAmp),
+    fromAmp: wrap(fromAmp),
     livesetJson: wrap(livesetJson),
     importJson: wrap(importJson)
   };
