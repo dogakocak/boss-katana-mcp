@@ -1,7 +1,7 @@
 # boss-katana-mcp — Design
 
 Date: 2026-10-21
-Status: implemented (v0.1.0)
+Status: implemented (v0.1.0; saving, livesets and controls added 2026-10-24)
 
 ## Goal
 
@@ -181,11 +181,34 @@ asks the user to close and reopen it.
   range/options; never clamp silently.
 - Page reloaded → agent re-installed transparently.
 
-## Out of scope (v1)
+## Saving, livesets and controls (added after v0.1)
 
-- Writing to stored patches (`PATCH(1..10)`), patch selection, librarian, Tone
-  Exchange.
-- SYSTEM block (global EQ, line out, MIDI settings).
+- `src/library-agent.ts` is a second page-agent body, appended to the tone agent
+  (one version hash covers both). It drives BTS's own building blocks instead of
+  its dialog-based wrappers: `patchMIDIController.sendPatchName` +
+  `util.waitForDT1Reply(PATCH_WRITE)` + `sendCommandExport` for WRITE,
+  `Librarian.read/write/temporaryWrite` and `LibrarianModel` for livesets, and
+  `librarianServices.saveToStorage2/saveIdList` for BTS's library storage. Every
+  method resolves `{ ok, value | error }`; amp operations are serialised and a
+  timed-out transfer is cancelled rather than left running.
+- Slots are user patch rows: PANEL 0, A1–A4 1–4, B1–B4 5–8 (per model, from
+  `modelInfo.config().patchExist`); PANEL never takes part in liveset transfers.
+- `src/library-tools.ts` owns name checks (ASCII, liveset ≤ 64, patch ≤ 16, never
+  truncated), 1-based/name references and the overwrite lock: replacing a stored
+  slot, a liveset patch or a `.tsl` file needs `overwrite: true`, and deleting a
+  liveset needs its exact name.
+- BTS stores each liveset in `$native.app.storage2` JSON-encoded twice (its model's
+  `toJSON` already returns a string).
+- `katana_controls` reads footswitch / expression pedal assignments; names come
+  from BTS's select boxes mapped through `list_order` in `export/item.json`
+  (loaded in the page with BTS's `_load`). BTS cannot detect which pedals are
+  physically connected.
+
+## Out of scope
+
+- Tone Exchange / Tone Central, All Data Backup (`.alb`).
+- SYSTEM block editing (global EQ, line out, MIDI settings).
+- Changing footswitch / expression pedal assignments.
 - Direct MIDI without BTS.
 - Any change to BTS files or the exe.
 
