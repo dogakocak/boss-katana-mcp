@@ -5,7 +5,7 @@ description: Use when the user describes a guitar tone, asks to change BOSS KATA
 
 # KATANA tone
 
-Tools (MCP server `katana`): `katana_status`, `katana_launch`, `katana_connect`, `katana_get`, `katana_set`, `katana_list_params`;
+Tools (MCP server `katana`): `katana_status`, `katana_launch`, `katana_connect`, `katana_get`, `katana_set`, `katana_list_params`, `katana_controls`;
 saving: `katana_list_patches`, `katana_select_patch`, `katana_write`; library: `katana_liveset_list`, `katana_liveset_create`,
 `katana_liveset_rename`, `katana_liveset_delete`, `katana_liveset_add_current`, `katana_liveset_load`, `katana_liveset_to_amp`,
 `katana_liveset_from_amp`, `katana_liveset_export`, `katana_liveset_import`.
@@ -33,6 +33,8 @@ saving: `katana_list_patches`, `katana_select_patch`, `katana_write`; library: `
   `other.master_key`, `eq.type`, `eq.position`, `pedalfx.type` are list indexes (a position into a fixed option
   list), not Hz or ms values. `katana_list_params` gives only the min/max index for those params, not the option
   labels, so prefer leaving them unchanged unless the user specifically asks to change one.
+- "Pedal / footswitch ne yapıyor", "GA-FC FS2 neye atanmış": call `katana_controls`. It shows assignments only; it
+  cannot tell whether a pedal is physically plugged in, so say so.
 
 ## Saving and the library
 - Save to the amp ("kaydet", "A2'ye yaz", "save this"): `katana_list_patches` → pick the slot the user named (ask if none) →

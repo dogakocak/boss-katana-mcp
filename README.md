@@ -131,6 +131,7 @@ program talking to the amp. The `katana-tone` skill tells the agent how to turn 
 | `katana_get` | Reads the tone as friendly keys (`amp.gain`, `booster.type`, …) |
 | `katana_set` | Sets one or more parameters at once |
 | `katana_list_params` | Lists a section's keys, ranges and option names |
+| `katana_controls` | Shows what the footswitches and expression pedals (amp jacks, GA-FC, GA-FC EX) are assigned to |
 | `katana_list_patches` | Lists the amp's stored patches (PANEL, A1..B4) and the selected slot |
 | `katana_select_patch` | Switches the amp to a stored slot (replaces the current tone) |
 | `katana_write` | Saves the current tone to a slot under a name (refuses to replace a stored patch unless `overwrite`) |
