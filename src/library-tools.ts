@@ -215,7 +215,8 @@ export function registerLibraryTools(server: McpServer, deps: LibraryToolDeps): 
   }, () => h.listPatches());
 
   server.registerTool('katana_select_patch', {
-    description: 'Switch the KATANA to a stored patch slot (like pressing a channel button).',
+    description: 'Switch the KATANA to a stored patch slot (like pressing a channel button). ' +
+      'Replaces the current tone; if it has unsaved changes the user may want, offer katana_write or katana_liveset_add_current first.',
     inputSchema: { slot },
   }, args => h.selectPatch(args));
 
@@ -264,7 +265,8 @@ export function registerLibraryTools(server: McpServer, deps: LibraryToolDeps): 
   }, args => h.livesetAddCurrent(args));
 
   server.registerTool('katana_liveset_load', {
-    description: 'Load a liveset patch into the amp\'s edit buffer to play it (not saved to a slot).',
+    description: 'Load a liveset patch into the amp\'s edit buffer to play it (not saved to a slot). ' +
+      'Replaces the current tone; if it has unsaved changes the user may want, offer katana_write or katana_liveset_add_current first.',
     inputSchema: { liveset: livesetRefSchema, patch: patchRefSchema },
   }, args => h.livesetLoad(args));
 

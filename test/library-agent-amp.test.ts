@@ -38,6 +38,19 @@ describe.skipIf(!btsInstalled)('library agent: amp operations', () => {
     expect(s.calls()).toContain('closeLoading');
   });
 
+  it('unmutes the preview after a failed export, so the amp is not left muted', async () => {
+    const s = createLibrarySandbox({ names: TEN });
+    const done = s.lib.writePatch(6, 'CLAUDE LEAD');
+    await until(sentTo(s, '7F000104'));
+    s.reply('7F000104', '0006');
+    s.sb.run('ProductSetting.timeout = 0.05');
+    await expect(done).rejects.toThrow('CMDID_EXPORT: the amp did not reply');
+    const muteIdx = s.dt1().indexOf('7F010109:01');
+    const unmuteIdx = s.dt1().indexOf('7F010109:00');
+    expect(muteIdx).toBeGreaterThanOrEqual(0);
+    expect(unmuteIdx).toBeGreaterThan(muteIdx);
+  });
+
   it('refuses amp work when no amp is connected or the librarian is busy', async () => {
     const off = createLibrarySandbox({ connected: false });
     await expect(off.lib.writePatch(1, 'X')).rejects.toThrow('No KATANA is connected');

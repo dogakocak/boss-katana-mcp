@@ -9,7 +9,7 @@
  * BTS globals used: librarianCommonInfo, librarianServices, LibrarianModel, PatchInfo, Parameter,
  * ProductSetting, patchModelController, patchMIDIController, patchDOMController, modelInfo,
  * librarianDynamicDOMController, currentMIDIConnect, util, ADDRESS_CONST, hex2, midiConnectionController,
- * setupKnobModFxTargetList, btsDOMController, $.
+ * setupKnobModFxTargetList, btsDOMController, $native, $.
  */
 export const LIBRARY_BODY = String.raw`(function () {
   var k = window.__katanaClaude;
@@ -150,11 +150,19 @@ export const LIBRARY_BODY = String.raw`(function () {
 
   // Same split as librarianServices.exportInst: one row, two rows, or "multiple" (7F7F).
   function exportCommand(rows) {
-    if (rows.length > 2) return sendExport(true, true, true, undefined);
-    if (rows.length === 2) {
-      return sendExport(false, true, false, rows[0]).then(function () { return sendExport(false, false, true, rows[1]); });
+    var p;
+    if (rows.length > 2) p = sendExport(true, true, true, undefined);
+    else if (rows.length === 2) {
+      p = sendExport(false, true, false, rows[0]).then(function () { return sendExport(false, false, true, rows[1]); });
+    } else {
+      p = sendExport(false, true, true, rows[0]);
     }
-    return sendExport(false, true, true, rows[0]);
+    // Preview mute is sent before the export, and unmute normally rides on the export's 0x40 flag;
+    // if the amp never replies, send a best-effort unmute so it is not left preview-muted.
+    return p.then(null, function (e) {
+      try { patchMIDIController.sendCommandPreviewMute(0); } catch (ignored) { /* best effort */ }
+      throw e;
+    });
   }
 
   function unmuteSoon() { setTimeout(function () { patchMIDIController.sendCommandPreviewMute(0); }, 10); }
@@ -194,7 +202,8 @@ export const LIBRARY_BODY = String.raw`(function () {
   }
 
   function deleteLiveset(i) {
-    livesetAt(i);
+    var l = livesetAt(i);
+    $native.app.storage2(l.id, '');
     librarianServices.deleteLiveset(i);
     librarianServices.saveIdList();
     redraw();

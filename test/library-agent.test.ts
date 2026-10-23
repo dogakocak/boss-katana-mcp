@@ -48,6 +48,7 @@ describe.skipIf(!btsInstalled)('library agent: library-only operations', () => {
     expect((await s.lib.livesets()).map(l => l.name)).toEqual(['LIVESET 1']);
     expect(JSON.parse(s.storage.ID_LIST).list).toEqual([0]);
     expect(s.calls().filter(c => c === 'redraw')).toHaveLength(3);
+    expect(s.storage[String(id)]).toBe('');
   });
 
   it('refuses a 51st liveset', async () => {

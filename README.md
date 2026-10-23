@@ -132,11 +132,11 @@ program talking to the amp. The `katana-tone` skill tells the agent how to turn 
 | `katana_set` | Sets one or more parameters at once |
 | `katana_list_params` | Lists a section's keys, ranges and option names |
 | `katana_list_patches` | Lists the amp's stored patches (PANEL, A1..B4) and the selected slot |
-| `katana_select_patch` | Switches the amp to a stored slot |
+| `katana_select_patch` | Switches the amp to a stored slot (replaces the current tone) |
 | `katana_write` | Saves the current tone to a slot under a name (refuses to replace a stored patch unless `overwrite`) |
 | `katana_liveset_list` / `_create` / `_rename` / `_delete` | Manage BOSS TONE STUDIO livesets |
 | `katana_liveset_add_current` | Stores the current tone in a liveset |
-| `katana_liveset_load` | Loads a liveset patch into the edit buffer |
+| `katana_liveset_load` | Loads a liveset patch into the edit buffer (replaces the current tone) |
 | `katana_liveset_to_amp` / `_from_amp` | Copies patches between a liveset and the amp's slots |
 | `katana_liveset_export` / `_import` | Saves / loads a liveset as a `.tsl` file |
 

@@ -44,6 +44,7 @@ saving: `katana_list_patches`, `katana_select_patch`, `katana_write`; library: `
 - Livesets live in BOSS TONE STUDIO's library on this PC (max 50, 15 patches each), not on the amp. Refer to them by the
   number or name from `katana_liveset_list`.
 - "Try" a stored tone: `katana_liveset_load` (edit buffer only) or `katana_select_patch` (amp slot).
+- Selecting a slot or loading a liveset patch replaces the current tone. If the user built or changed a tone in this session and has not saved it, offer to save it first (katana_write / katana_liveset_add_current).
 - Delete a liveset only after the user confirms by name.
 - Export/import: report the file path the tool returns.
 
