@@ -108,6 +108,39 @@ describe('library tools: livesets', () => {
     expect(text(await h.livesetFromAmp({ liveset: 'GIG', slots: ['PANEL'] }))).toContain('PANEL cannot');
   });
 
+  it('refuses addCurrent on a liveset that already has 15 patches', async () => {
+    const lib = fakeLib({
+      livesets: async () => [{ id: 1, name: 'FULL', patches: Array.from({ length: 15 }, (_, i) => `P${i}`) }],
+    });
+    const h = createLibraryHandlers({ lib });
+    expect(text(await h.livesetAddCurrent({ liveset: 'FULL', name: 'X' }))).toContain('is full (15 patches)');
+    expect(lib.log).toEqual([]);
+  });
+
+  it('refuses fromAmp when it would push a liveset past 15 patches', async () => {
+    const lib = fakeLib({
+      livesets: async () => [{ id: 1, name: 'TEN', patches: Array.from({ length: 10 }, (_, i) => `P${i}`) }],
+    });
+    const h = createLibraryHandlers({ lib });
+    expect(text(await h.livesetFromAmp({ liveset: 'TEN' }))).toContain('would exceed 15');
+    expect(lib.log).toEqual([]);
+  });
+
+  it('checks fromAmp capacity before creating a new liveset, so a rejected call leaves no orphan', async () => {
+    const lib = fakeLib();
+    const h = createLibraryHandlers({ lib });
+    expect(text(await h.livesetFromAmp({ liveset: 'NEW SET', slots: Array.from({ length: 16 }, () => 'A1') })))
+      .toContain('would exceed 15');
+    expect(lib.log).toEqual([]);
+  });
+
+  it('creates a new liveset then copies from amp when capacity allows', async () => {
+    const lib = fakeLib();
+    const h = createLibraryHandlers({ lib });
+    expect(json(await h.livesetFromAmp({ liveset: 'NEW SET' }))).toMatchObject({ created: true });
+    expect(lib.log).toEqual([['createLiveset', 'NEW SET'], ['fromAmp', [1, 2, 3, 4, 5, 6, 7, 8], 0]]);
+  });
+
   it('exports to the default folder and refuses to overwrite a file', async () => {
     const home = mkdtempSync(join(tmpdir(), 'katana-home-'));
     const h = createLibraryHandlers({ lib: fakeLib(), home });

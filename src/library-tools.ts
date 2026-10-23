@@ -55,14 +55,22 @@ export function createLibraryHandlers({ lib, home }: LibraryToolDeps) {
     return { index, info: list[index] };
   }
 
-  /** An existing liveset, or a new one when `ref` is a name nobody has. */
-  async function livesetOrCreate(ref: Ref): Promise<{ index: number; info: LivesetInfo; created: boolean }> {
+  /**
+   * An existing liveset, or a new one when `ref` is a name nobody has. `create()` is
+   * lazy so callers can validate (e.g. the 15-patch cap) against `info`/`created`
+   * before anything is actually created.
+   */
+  async function livesetOrNew(ref: Ref): Promise<{ info: LivesetInfo; created: boolean; create: () => Promise<number> }> {
     const list = await lib.livesets();
     const found = findRef(list.map(l => l.name), ref, 'liveset');
-    if (found !== undefined) return { index: found, info: list[found], created: false };
+    if (found !== undefined) return { info: list[found], created: false, create: async () => found };
     const name = checkName(String(ref), LIVESET_NAME_MAX, 'liveset');
-    const index = await lib.createLiveset(name);
-    return { index, info: { id: -1, name, patches: [] }, created: true };
+    return { info: { id: -1, name, patches: [] }, created: true, create: () => lib.createLiveset(name) };
+  }
+
+  async function livesetOrCreate(ref: Ref): Promise<{ index: number; info: LivesetInfo; created: boolean }> {
+    const t = await livesetOrNew(ref);
+    return { index: await t.create(), info: t.info, created: t.created };
   }
 
   const patchRef = (info: LivesetInfo, ref: Ref) => resolveRef(info.patches, ref, `patch in "${info.name}"`);
@@ -163,11 +171,12 @@ export function createLibraryHandlers({ lib, home }: LibraryToolDeps) {
       const rows = slots?.length
         ? slots.map(s => transferableSlot(p, s).row)
         : p.slots.filter(s => s.exists && s.transferable).map(s => s.row);
-      const t = await livesetOrCreate(ref);
+      const t = await livesetOrNew(ref);
       if (t.info.patches.length + rows.length > MAX_PATCHES) {
         throw new LibraryError(`Liveset "${t.info.name}" has ${t.info.patches.length} patches; adding ${rows.length} would exceed ${MAX_PATCHES}.`);
       }
-      const r = await lib.fromAmp(rows, t.index);
+      const index = await t.create();
+      const r = await lib.fromAmp(rows, index);
       return ok({ liveset: r.liveset, created: t.created, added: rows.map((row, k) => ({ from: slotName(row), name: r.added[k] })) });
     }),
 
@@ -212,8 +221,8 @@ export function registerLibraryTools(server: McpServer, deps: LibraryToolDeps): 
   }, args => h.write(args));
 
   const ref = z.union([z.string(), z.number().int()]);
-  const livesetRef = ref.describe('Liveset number from katana_liveset_list (1-based) or its exact name');
-  const patchRef = ref.describe('Patch number in the liveset (1-based) or its exact name');
+  const livesetRefSchema = ref.describe('Liveset number from katana_liveset_list (1-based) or its exact name');
+  const patchRefSchema = ref.describe('Patch number in the liveset (1-based) or its exact name');
 
   server.registerTool('katana_liveset_list', {
     description: 'List the livesets in BOSS TONE STUDIO\'s library (numbered from 1) with their patch names.',
@@ -226,19 +235,19 @@ export function registerLibraryTools(server: McpServer, deps: LibraryToolDeps): 
 
   server.registerTool('katana_liveset_rename', {
     description: 'Rename a liveset.',
-    inputSchema: { liveset: livesetRef, name: z.string() },
+    inputSchema: { liveset: livesetRefSchema, name: z.string() },
   }, args => h.livesetRename(args));
 
   server.registerTool('katana_liveset_delete', {
     description: 'Delete a liveset from the library. Confirm with the user first; it cannot be undone.',
-    inputSchema: { liveset: livesetRef },
+    inputSchema: { liveset: livesetRefSchema },
   }, args => h.livesetDelete(args));
 
   server.registerTool('katana_liveset_add_current', {
     description: 'Store the current tone (edit buffer) as a patch in a liveset (created if the name is new). ' +
       'Appends by default; position replaces that patch, which needs overwrite after asking the user. Max 15 patches.',
     inputSchema: {
-      liveset: livesetRef,
+      liveset: livesetRefSchema,
       name: z.string().describe('Patch name, max 16 ASCII characters'),
       position: z.number().int().optional().describe('1-based position; omit to append'),
       overwrite: z.boolean().optional(),
@@ -247,15 +256,15 @@ export function registerLibraryTools(server: McpServer, deps: LibraryToolDeps): 
 
   server.registerTool('katana_liveset_load', {
     description: 'Load a liveset patch into the amp\'s edit buffer to play it (not saved to a slot).',
-    inputSchema: { liveset: livesetRef, patch: patchRef },
+    inputSchema: { liveset: livesetRefSchema, patch: patchRefSchema },
   }, args => h.livesetLoad(args));
 
   server.registerTool('katana_liveset_to_amp', {
-    description: 'Write liveset patches (all, or the listed ones) to consecutive amp slots starting at startSlot (A1 or later; PANEL is skipped). ' +
+    description: 'Write liveset patches (all, or the listed ones) to consecutive amp slots starting at startSlot (A1 or later; PANEL cannot receive liveset patches). ' +
       'Refuses occupied slots unless overwrite is true: ask the user first.',
     inputSchema: {
-      liveset: livesetRef,
-      patches: z.array(ref).optional().describe('Patches to send, in order; omit for all'),
+      liveset: livesetRefSchema,
+      patches: z.array(ref).optional().describe('Patches to send, in order, by 1-based number or exact name; omit for all'),
       startSlot: z.string().describe('First slot, e.g. A1 or B1'),
       overwrite: z.boolean().optional(),
     },
@@ -263,14 +272,14 @@ export function registerLibraryTools(server: McpServer, deps: LibraryToolDeps): 
 
   server.registerTool('katana_liveset_from_amp', {
     description: 'Copy patches stored on the amp (all of A1..B4, or the listed slots) into a liveset (created if the name is new).',
-    inputSchema: { slots: z.array(z.string()).optional(), liveset: livesetRef },
+    inputSchema: { slots: z.array(z.string()).optional(), liveset: livesetRefSchema },
   }, args => h.livesetFromAmp(args));
 
   server.registerTool('katana_liveset_export', {
     description: 'Save a liveset as a BOSS TONE STUDIO .tsl file. Default: Documents\\BOSS KATANA Tones\\<liveset>.tsl. ' +
       'Refuses an existing file unless overwrite is true.',
     inputSchema: {
-      liveset: livesetRef,
+      liveset: livesetRefSchema,
       path: z.string().optional().describe('File or folder path; .tsl is added if missing'),
       overwrite: z.boolean().optional(),
     },
