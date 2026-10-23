@@ -2,7 +2,7 @@
 
 Title: **Add experimental KATANA-50 Gen 1 MIDI controls and guarded tone editing**
 
-Target: `ac0z/boss-katana-mcp:main`
+Target: `dogakocak/boss-katana-mcp:main`
 Head: `karmasis-alicem-ozkara:feat/katana-gen1-support`
 
 ## What changed
