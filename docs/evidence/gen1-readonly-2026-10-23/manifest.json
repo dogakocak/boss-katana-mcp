@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "capture": "gen1-readonly-20261023-211315-4680fdbd",
+  "capturedSourceRevision": "c5ac085f1849157e8fcddfdc30e388bf6cf31540",
+  "startedAtUtc": "2026-10-23T18:14:25.665Z",
+  "completedAtUtc": "2026-10-23T18:14:28.447Z",
+  "copyPolicy": "All six original evidence files retained byte-for-byte; no hardware rerun during documentation update.",
+  "files": [
+    {
+      "path": "midi-audit.jsonl",
+      "bytes": 14605,
+      "sha256": "5a6db1f367209393a90841743464d2a51926abbbd7d0df512e6ec01cbde1a0a2"
+    },
+    {
+      "path": "preflight.json",
+      "bytes": 465,
+      "sha256": "5cce10538cf818ed594249ba898f9fad75034879e54b6687b8c76017b8d6c25b"
+    },
+    {
+      "path": "read-only-probe.mjs",
+      "bytes": 8369,
+      "sha256": "66bff30c7505a9460bb93560489794523d7b2ff52016f2510243cadc15c50cfe"
+    },
+    {
+      "path": "report.json",
+      "bytes": 9631,
+      "sha256": "548829a89ecfb93aca4f0fc68b46df29ac09a2be7e3a4d48be66d58310a41800"
+    },
+    {
+      "path": "verification.json",
+      "bytes": 1233,
+      "sha256": "67f36d034617a34acc82052f1ac28d6ac2c215286ab6e68c0cb709c6cdb21dff"
+    },
+    {
+      "path": "verify_read_only.py",
+      "bytes": 5921,
+      "sha256": "4dbe9dcafec09b4260b4e843f980649680bf1b5f2d109d7835f06c37a83a192b"
+    }
+  ]
+}

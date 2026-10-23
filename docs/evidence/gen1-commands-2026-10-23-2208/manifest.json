@@ -1,0 +1,17 @@
+{
+  "sha256": {
+    "wet25/command.mjs": "31935a21ad62fa2d9850275e2dcb2796c3ff71e1af7ccf8f33fd75614a43f316",
+    "wet25/guard.mjs": "4e2bfa2ec0b023cc35761a78c1d086319d28e8e533093ec53df56e2872570607",
+    "wet25/manifest.json": "9161af29d1409835dde8cc6932cb53714f543ac95c2b75ffff3df9108e6a33f7",
+    "wet25/mcp-report.json": "a5aef7b2dc30b1e373673646e3749db6f3126a58c3a8f59ae147763a1e0903b7",
+    "wet25/midi-audit.jsonl": "d37c8d986e7c9d4eb550b9cc6bec4b61df101ca606a52d3d3abc8bf1436e8bf1",
+    "wet50/captured-parameters.js": "d23bd762fff85c6fdc8145fa7539406cd893a8aa5989ed9c8e49e1f8b7f48f13",
+    "wet50/captured-parameters.ts": "a41fd6fea5a1ffb32d65e40af18babfcbc4e9719acda7ad3a7554eb22305d118",
+    "wet50/command.mjs": "7067d628b8e997d25a21d01743f02f78ce953e715790f621bd61017053d2683b",
+    "wet50/guard.mjs": "c354de236f35737b1e6848c02c20c68e9453163d56e056cb45df8b45e2d84646",
+    "wet50/mcp-report.json": "0fa473ebbc08c120bb1ca4af4e8da493875412f328095839d1f348f63937f227",
+    "wet50/midi-audit.jsonl": "78661db49a7d6d3b5ff9b3184917552071dbf98cc32f8cbc835d66d526ae83aa",
+    "wet50/runtime-delta.patch": "ba8d06d27d52ee1cee91d7b370c4dc41e3990eb3455ee0b6ad1c6571f000368b",
+    "wet50/supplement.json": "a06b07c063b107b9900b9c64b702a3e28d266f2ed46922c1258257fe8d79d484"
+  }
+}

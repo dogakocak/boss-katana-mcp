@@ -1,0 +1,353 @@
+{
+  "startedAtUtc": "2026-10-23T18:14:25.665Z",
+  "timeZone": "Europe/Istanbul",
+  "sourceRevision": "c5ac085f1849157e8fcddfdc30e388bf6cf31540",
+  "nodeVersion": "v24.14.1",
+  "platform": "win32",
+  "architecture": "x64",
+  "mode": "physical-read-only",
+  "hardwareWritesEnabled": false,
+  "automaticRetries": false,
+  "physicalModelBasis": "User-specified KATANA-50 Gen 1; prior operator label confirmation. Inquiry only verifies observed Roland family/member.",
+  "firmware": "unknown",
+  "discovery": {
+    "ports": {
+      "inputs": [
+        "KATANA",
+        "KATANA DAW CTRL",
+        "KATANA CTRL"
+      ],
+      "outputs": [
+        "Microsoft GS Wavetable Synth",
+        "KATANA",
+        "KATANA DAW CTRL",
+        "KATANA CTRL"
+      ]
+    },
+    "candidate": {
+      "input": 0,
+      "output": 1
+    },
+    "modelVerified": false
+  },
+  "connection": {
+    "backend": "gen1-midi",
+    "experimental": true,
+    "hardwareEnabled": true,
+    "connected": true,
+    "locked": false,
+    "modelConfirmedByOperator": true,
+    "firmware": "unknown",
+    "volumeWrites": false,
+    "writesEnabled": false,
+    "warning": "Cached connection state; physical liveness is checked by explicit I/O. MIDI identity cannot prove KATANA-50 submodel."
+  },
+  "identityHex": "F0 7E 00 06 02 41 33 03 00 00 00 00 00 00 F7",
+  "reads": [
+    {
+      "key": "AmpType",
+      "sentinel": "start",
+      "address": "00 00 04 20",
+      "length": 1,
+      "explicitResearch": false,
+      "raw": 2,
+      "elapsedMs": 1.2623000000000388,
+      "result": "PASS"
+    },
+    {
+      "key": "PanelGain",
+      "sentinel": "start",
+      "address": "00 00 04 21",
+      "length": 1,
+      "explicitResearch": false,
+      "raw": 100,
+      "elapsedMs": 0.9325000000000045,
+      "result": "PASS"
+    },
+    {
+      "key": "SignalChainPattern",
+      "sentinel": "start",
+      "address": "60 00 12 00",
+      "length": 1,
+      "explicitResearch": true,
+      "raw": 0,
+      "elapsedMs": 0.9705999999999904,
+      "result": "PASS"
+    },
+    {
+      "key": "Volume",
+      "sentinel": null,
+      "address": "00 00 04 22",
+      "length": 1,
+      "explicitResearch": false,
+      "raw": 9,
+      "elapsedMs": 0.9355000000000473,
+      "result": "PASS"
+    },
+    {
+      "key": "Bass",
+      "sentinel": null,
+      "address": "00 00 04 23",
+      "length": 1,
+      "explicitResearch": false,
+      "raw": 54,
+      "elapsedMs": 0.8895999999999731,
+      "result": "PASS"
+    },
+    {
+      "key": "Middle",
+      "sentinel": null,
+      "address": "00 00 04 24",
+      "length": 1,
+      "explicitResearch": false,
+      "raw": 100,
+      "elapsedMs": 1.068300000000022,
+      "result": "PASS"
+    },
+    {
+      "key": "Treble",
+      "sentinel": null,
+      "address": "00 00 04 25",
+      "length": 1,
+      "explicitResearch": false,
+      "raw": 93,
+      "elapsedMs": 0.791300000000092,
+      "result": "PASS"
+    },
+    {
+      "key": "Presence",
+      "sentinel": null,
+      "address": "00 00 04 26",
+      "length": 1,
+      "explicitResearch": false,
+      "raw": 16,
+      "elapsedMs": 0.8182999999999083,
+      "result": "PASS"
+    },
+    {
+      "key": "BoosterMod",
+      "sentinel": null,
+      "address": "00 00 04 27",
+      "length": 1,
+      "explicitResearch": false,
+      "raw": 0,
+      "elapsedMs": 0.9459999999999127,
+      "result": "PASS"
+    },
+    {
+      "key": "DelayFx",
+      "sentinel": null,
+      "address": "00 00 04 28",
+      "length": 1,
+      "explicitResearch": false,
+      "raw": 30,
+      "elapsedMs": 0.9140999999999622,
+      "result": "PASS"
+    },
+    {
+      "key": "Reverb",
+      "sentinel": null,
+      "address": "00 00 04 29",
+      "length": 1,
+      "explicitResearch": false,
+      "raw": 3,
+      "elapsedMs": 0.8916999999999007,
+      "result": "PASS"
+    },
+    {
+      "key": "TemporaryGain",
+      "sentinel": null,
+      "address": "60 00 00 52",
+      "length": 1,
+      "explicitResearch": false,
+      "raw": 100,
+      "elapsedMs": 0.9900000000000091,
+      "result": "PASS"
+    },
+    {
+      "key": "DelayTime",
+      "sentinel": null,
+      "address": "60 00 05 62",
+      "length": 2,
+      "explicitResearch": true,
+      "raw": 456,
+      "elapsedMs": 0.93100000000004,
+      "result": "PASS"
+    },
+    {
+      "key": "DelayFeedback",
+      "sentinel": null,
+      "address": "60 00 05 64",
+      "length": 1,
+      "explicitResearch": true,
+      "raw": 28,
+      "elapsedMs": 0.8460999999999785,
+      "result": "PASS"
+    },
+    {
+      "key": "ReverbLevel",
+      "sentinel": null,
+      "address": "60 00 06 18",
+      "length": 1,
+      "explicitResearch": true,
+      "raw": 4,
+      "elapsedMs": 0.8591000000001259,
+      "result": "PASS"
+    },
+    {
+      "key": "NoiseSuppressorOn",
+      "sentinel": null,
+      "address": "60 00 06 63",
+      "length": 1,
+      "explicitResearch": true,
+      "raw": 1,
+      "elapsedMs": 0.8761999999999261,
+      "result": "PASS"
+    },
+    {
+      "key": "NoiseSuppressorThreshold",
+      "sentinel": null,
+      "address": "60 00 06 64",
+      "length": 1,
+      "explicitResearch": true,
+      "raw": 47,
+      "elapsedMs": 0.8413999999997941,
+      "result": "PASS"
+    },
+    {
+      "key": "EqLowGain",
+      "sentinel": null,
+      "address": "60 00 01 32",
+      "length": 1,
+      "explicitResearch": true,
+      "raw": 20,
+      "elapsedMs": 0.8929000000002816,
+      "result": "PASS"
+    },
+    {
+      "key": "Fx1PhaserRate",
+      "sentinel": null,
+      "address": "60 00 02 76",
+      "length": 1,
+      "explicitResearch": true,
+      "raw": 80,
+      "elapsedMs": 0.8087000000000444,
+      "result": "PASS"
+    },
+    {
+      "key": "Fx1PhaserDepth",
+      "sentinel": null,
+      "address": "60 00 02 77",
+      "length": 1,
+      "explicitResearch": true,
+      "raw": 40,
+      "elapsedMs": 1.0248000000001412,
+      "result": "PASS"
+    },
+    {
+      "key": "AmpType",
+      "sentinel": "end",
+      "address": "00 00 04 20",
+      "length": 1,
+      "explicitResearch": false,
+      "raw": 2,
+      "elapsedMs": 0.8922999999999774,
+      "result": "PASS"
+    },
+    {
+      "key": "PanelGain",
+      "sentinel": "end",
+      "address": "00 00 04 21",
+      "length": 1,
+      "explicitResearch": false,
+      "raw": 100,
+      "elapsedMs": 0.7572000000000116,
+      "result": "PASS"
+    },
+    {
+      "key": "SignalChainPattern",
+      "sentinel": "end",
+      "address": "60 00 12 00",
+      "length": 1,
+      "explicitResearch": true,
+      "raw": 0,
+      "elapsedMs": 0.8460000000000036,
+      "result": "PASS"
+    }
+  ],
+  "sentinelsMatched": true,
+  "failure": null,
+  "cleanupFailure": null,
+  "status": "PASS",
+  "sourceHashes": {
+    "src/gen1/adapter.ts": "8badefa68a6a17e492d87f31aab06548b5e322d6c999451b59216beac8885261",
+    "src/gen1/native-midi.ts": "ca7e3eee414606269af4d60cc400ab92529d87102991b9f20d7e6dc167f39316",
+    "src/gen1/protocol.ts": "babc0c3f0e37791333470f8d7a611aecce4eca50c81817de3a494a42704ace98",
+    "src/gen1/parameters.ts": "e620422eb20c0a48f5afdad6b72d3cd9674ea46cb5379fbf990ac2057c686bd7",
+    "dist/gen1/adapter.js": "0d8ecbaa5d9dbac54e53655179a7f2019094d64943707d2b2cf660cff75a78de",
+    "dist/gen1/native-midi.js": "fa1a04f559a503787190cbfedc7beb7409ae83e4889dca94863459ab4e58f7b7",
+    "dist/gen1/protocol.js": "fa4bc1775c0b864323336383ede919e6034b8a39d2b43e4f915592f4643ab929",
+    "dist/gen1/parameters.js": "1fd378aa6160512f9febf0aea367abe285b2dc6f0746945982be179c730bf2ab"
+  },
+  "preflight": {
+    "observedAtUtc": "2026-10-23T18:13:16.1958074Z",
+    "devices": [
+      {
+        "Status": "OK",
+        "FriendlyName": "KATANA",
+        "InstanceId": "USB\\VID_0582&PID_01D8\\6&5280D8E&0&1"
+      }
+    ],
+    "conflictingApps": [],
+    "hardwareAccessAuthorized": "Explicit user request: read-only Gen 1 adapter test",
+    "physicalModelBasis": "User-supplied target KATANA-50 Gen 1 and prior operator label evidence; USB identity alone does not prove submodel"
+  },
+  "midiPackageVersion": "3.8.1",
+  "initialStatus": {
+    "backend": "gen1-midi",
+    "experimental": true,
+    "hardwareEnabled": true,
+    "connected": false,
+    "locked": false,
+    "modelConfirmedByOperator": true,
+    "firmware": "unknown",
+    "volumeWrites": false,
+    "writesEnabled": false,
+    "warning": "Cached connection state; physical liveness is checked by explicit I/O. MIDI identity cannot prove KATANA-50 submodel."
+  },
+  "beforeDisconnect": {
+    "backend": "gen1-midi",
+    "experimental": true,
+    "hardwareEnabled": true,
+    "connected": true,
+    "locked": false,
+    "modelConfirmedByOperator": true,
+    "firmware": "unknown",
+    "volumeWrites": false,
+    "writesEnabled": false,
+    "warning": "Cached connection state; physical liveness is checked by explicit I/O. MIDI identity cannot prove KATANA-50 submodel."
+  },
+  "afterDisconnect": {
+    "backend": "gen1-midi",
+    "experimental": true,
+    "hardwareEnabled": true,
+    "connected": false,
+    "locked": false,
+    "modelConfirmedByOperator": true,
+    "firmware": "unknown",
+    "volumeWrites": false,
+    "writesEnabled": false,
+    "warning": "Cached connection state; physical liveness is checked by explicit I/O. MIDI identity cannot prove KATANA-50 submodel."
+  },
+  "completedAtUtc": "2026-10-23T18:14:28.447Z",
+  "elapsedMs": 2781.4605,
+  "uniqueAddressesRead": 20,
+  "skippedKeys": [],
+  "txAttempts": 24,
+  "txNativeReturned": 24,
+  "rxMessages": 24,
+  "forbiddenTxAttempts": 0,
+  "auditRecords": 72,
+  "auditSha256": "5a6db1f367209393a90841743464d2a51926abbbd7d0df512e6ec01cbde1a0a2",
+  "runnerSha256": "66bff30c7505a9460bb93560489794523d7b2ff52016f2510243cadc15c50cfe"
+}

@@ -1,0 +1,103 @@
+{
+  "observedDate": "2026-10-23",
+  "source": "operator-supplied TONEFORGE project (untracked local snapshot)",
+  "licensing": "No LICENSE/COPYING found; source not copied",
+  "files": [
+    {
+      "path": "src/ToneForge.Protocol/RolandSysEx.cs",
+      "sha256": "871fe4abfe2a94c28bac26f68388f296b3dca0945e7982d9a9ee6c205b6b51a7"
+    },
+    {
+      "path": "src/ToneForge.AppCore/ParameterCatalog.cs",
+      "sha256": "966193171698c1475861a8e00cd6997d024ca904083e15074fc594f65c114c1f"
+    },
+    {
+      "path": "src/ToneForge.AppCore/ParameterKnowledge.cs",
+      "sha256": "fee64fb1d2c2de3b46bec01b2dbb358812d51341a282a74c907a533e13c50a6e"
+    },
+    {
+      "path": "src/ToneForge.AppCore/UniversalParameterRegistry.cs",
+      "sha256": "00e2804cf141e03a87579310637790a46548ff75149a07aba04983d860a35a1c"
+    },
+    {
+      "path": "src/ToneForge.AppCore/KatanaAdapters.cs",
+      "sha256": "ec2b11b538cf516ce9e979740271997b3c636172a7a7fe6e30f0faa41499e26c"
+    },
+    {
+      "path": "src/ToneForge.AppCore/KatanaAmplifierSession.cs",
+      "sha256": "ffa9f7d5eb73ce2ebdf48a55a1a8d163ae6ba618cb4e5a0c212a34f3caa726a3"
+    },
+    {
+      "path": "src/ToneForge.AppCore/ParameterReadEngine.cs",
+      "sha256": "4b4d3e131f7b2e25f0bd0cb37d25dc3991278a96df2ae3547d1bea5ebd3eb728"
+    },
+    {
+      "path": "src/ToneForge.AppCore/WinMmParameterReadSessionFactory.cs",
+      "sha256": "e33d6637fb0e9d3107226f557e3faec048d60a7a2b8749fb5061eee7c2e14e59"
+    },
+    {
+      "path": "src/ToneForge.AppCore/ToneForgePresets.cs",
+      "sha256": "57aac0651f55d18368523c990b44f385ab98f7b196817077d346105d67a10f71"
+    },
+    {
+      "path": "src/ToneForge.Gain/GainController.cs",
+      "sha256": "350c40dfde9222b50c2b8818912bb07c8998d53f5abcb81c2a87f855762fdade"
+    },
+    {
+      "path": "tools/ToneForgeMidiIdentity.cs",
+      "sha256": "205ae003336a25fef2b5ac045c5241a5e827f79570ca7fbd879b07c2a7913cd7"
+    },
+    {
+      "path": "tools/ToneForgeMidiRead.cs",
+      "sha256": "50bd1d67693652dfbdcbfd934bcb0ceffd530541c35345c1de512076934a1c76"
+    },
+    {
+      "path": "tests/Run-ProtocolTests.ps1",
+      "sha256": "0ca89dd35b0f0cf15811e7e60928a3434daa382046900b597a04428b281827a9"
+    },
+    {
+      "path": "src/ToneForge.ParameterEngine.Validation/Program.cs",
+      "sha256": "689d394e5d4d492688af38dfc088840924f08c2643fe2bcc4eeb813d0535ed21"
+    },
+    {
+      "path": "src/ToneForge.ParameterEngine.Validation/WinMmParameterReadValidation.cs",
+      "sha256": "b87d7dba31102c88bc5519ad941ab7b95a2b105c057357eaf2751f02db405e37"
+    },
+    {
+      "path": "evidence/identity-inquiry-2026-10-20.json",
+      "sha256": "971454c6c92baf059798fa4b06b40c4566f4d2d35bc3c1f43601c3d52f0fa9d7"
+    },
+    {
+      "path": "evidence/gain-hardware-experiment-2026-10-20.json",
+      "sha256": "8300e7dc375e85da1c8f78fb278caa30508aad2201f909723633080a053c3ff3"
+    },
+    {
+      "path": "evidence/phase45-ns1-experiment-2026-10-20.json",
+      "sha256": "c1636157a0fa74d376af83f0fc60e2cbd84a93a41125ac5e41ab02c28c6d2369"
+    },
+    {
+      "path": "evidence/phase7a-hardware-read-sweep-2026-10-20.json",
+      "sha256": "ae5f5663418dfb1493230caf6752ffb19b629b9e7f270869a139fa8517725239"
+    },
+    {
+      "path": "evidence/phase7a-hardware-read-sweep-verified-2026-10-20.json",
+      "sha256": "8f92558e3087c72e1834f9f2922318c275ea875d6175b6cdf7d28f083155ae11"
+    },
+    {
+      "path": "docs/GAIN_PROTOCOL.md",
+      "sha256": "2edde2631ef8440144f5a4bcb29dc49fdf4cbcf9052c8943d0d5f93adda3d30e"
+    },
+    {
+      "path": "docs/WINMM_PARAMETER_READ_ADAPTER.md",
+      "sha256": "12742b4b3f7315768cd1415fe32b4e372a73c764d397b565de860bad31a1eeaf"
+    },
+    {
+      "path": "docs/PHASE4_DEPENDENCIES.md",
+      "sha256": "17f8badf004b5842bb8feca56407885894ad1c5f3b040b9584ba2f71590de09a"
+    },
+    {
+      "path": "README.md",
+      "sha256": "ae6ef511422c6986071a9a2d4f1a3786a2fb4bc8d789d2b129e07add3645b182"
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "actualUserCommand": "neden gelmiyor 50 falan yap",
+  "captureRequestFieldHasEncodingMismatch": true,
+  "originalReportPreserved": true,
+  "outputConfirmedByUser": "Amfinin hoparloru",
+  "audibleResultConfirmedByUser": true,
+  "userFeedback": "Artik duyuluyor",
+  "audioMeasured": false,
+  "workingTreeExtensionAtCapture": "wet-level ceiling 30 to 50; raw source limits unchanged; main LEVEL ceiling unchanged",
+  "runtimeSha256": {
+    "captured-parameters.ts": "a41fd6fea5a1ffb32d65e40af18babfcbc4e9719acda7ad3a7554eb22305d118",
+    "captured-parameters.js": "d23bd762fff85c6fdc8145fa7539406cd893a8aa5989ed9c8e49e1f8b7f48f13",
+    "runtime-delta.patch": "ba8d06d27d52ee1cee91d7b370c4dc41e3990eb3455ee0b6ad1c6571f000368b"
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "status": "PASS",
+  "identity": 1,
+  "rq1": 70,
+  "dt1": 9,
+  "received": 71,
+  "originalValues": {
+    "TemporaryLevel": 28,
+    "TemporaryAmpType": 1,
+    "BoosterOn": 0,
+    "ModOn": 0,
+    "FxOn": 0,
+    "DelayOn": 0,
+    "ReverbOn": 0,
+    "TemporaryGain": 54,
+    "TemporaryBass": 54,
+    "TemporaryMiddle": 58,
+    "TemporaryTreble": 46,
+    "TemporaryPresence": 16,
+    "NoiseSuppressorOn": 1,
+    "NoiseSuppressorThreshold": 47
+  },
+  "finalValues": {
+    "TemporaryAmpType": 23,
+    "BoosterOn": 0,
+    "ModOn": 0,
+    "FxOn": 0,
+    "DelayOn": 0,
+    "ReverbOn": 0,
+    "TemporaryGain": 85,
+    "TemporaryBass": 60,
+    "TemporaryMiddle": 40,
+    "TemporaryTreble": 65,
+    "TemporaryPresence": 45,
+    "NoiseSuppressorOn": 1,
+    "NoiseSuppressorThreshold": 55,
+    "TemporaryLevel": 5
+  },
+  "auditSha256": "839070b752665da3a12c4e6be77bc02423b1ef46634130ec7a79db1bfa301bf8",
+  "scope": "Native-boundary bytes and MCP response; no acoustic or power-cycle verification"
+}

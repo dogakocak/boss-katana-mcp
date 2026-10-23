@@ -4,10 +4,13 @@
   "private": true,
   "license": "MIT",
   "type": "module",
-  "bin": { "boss-katana-mcp": "dist/index.js" },
+  "bin": {
+    "boss-katana-mcp": "dist/index.js"
+  },
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "test": "vitest run",
+    "test:gen1": "vitest run test/gen1.test.ts test/gen1-native.test.ts test/gen1-tone.test.ts test/backend.test.ts",
     "test:e2e": "powershell -NoProfile -Command \"$env:KATANA_E2E='1'; npx vitest run test/e2e.test.ts\""
   },
   "dependencies": {
@@ -19,5 +22,10 @@
     "typescript": "^5.9.0",
     "vitest": "^4.0.0"
   },
-  "engines": { "node": ">=24" }
+  "engines": {
+    "node": ">=24"
+  },
+  "optionalDependencies": {
+    "@julusian/midi": "3.8.1"
+  }
 }

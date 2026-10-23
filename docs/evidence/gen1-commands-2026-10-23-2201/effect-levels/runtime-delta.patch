@@ -1,0 +1,17 @@
+diff --git a/src/gen1/parameters.ts b/src/gen1/parameters.ts
+index b441a0c..29cb666 100644
+--- a/src/gen1/parameters.ts
++++ b/src/gen1/parameters.ts
+@@ -29,9 +29,12 @@ export const GEN1_PARAMETERS: readonly Gen1Parameter[] = Object.freeze([
+   ...panel.map((key, i) => ({ key, address: [0, 0, 4, 0x20 + i], length: 1, research: false })),
+   { key: 'TemporaryGain', address: [0x60, 0, 0, 0x52], length: 1, research: false, rawRange: [0, 120] },
+   ...research.map(([key, address, length]) => ({ key, address, length, research: true,
++    ...(key === 'ReverbLevel' ? { rawRange: [0, 100], writeMax: 30 } : {}),
+     ...(key === 'NoiseSuppressorOn' ? { rawRange: [0, 1] } : {}),
+     ...(key === 'NoiseSuppressorThreshold' ? { rawRange: [0, 100] } : {}),
+   })),
++  { key: 'DelayLevel', address: [0x60, 0, 5, 0x66], length: 1, research: false,
++    rawRange: [0, 120], writeMax: 30 },
+   // Only the five default amp algorithms, not all of the editor's hidden models.
+   { key: 'TemporaryAmpType', address: [0x60, 0, 0, 0x51], length: 1, research: false,
+     rawRange: [0, 27], writeValues: [1, 8, 11, 24, 23] },

@@ -1,0 +1,18 @@
+{
+  "sha256": {
+    "effect-levels/captured-parameters.js": "ccbfaa530f700799c05a5a838fe16291207addd0f3fefe8bdb409701975d956a",
+    "effect-levels/captured-parameters.ts": "77723adb6d44c28c632e9705bfeb184c477f11201e9f3b210b1fb64ddfe7973f",
+    "effect-levels/command.mjs": "d4cb6dcdde73e4af1d887bd735d7037f4f14e033a5886644253a5f233e529f97",
+    "effect-levels/guard.mjs": "ddf99e2868c782a698a46602c6df69969a9b5dceb956a4adf45063fcf4846f39",
+    "effect-levels/mcp-report.json": "a5b404c0bab3235dfd64fc571b4a2f742f6be2043b346eb47cc5eb9c8069c0b7",
+    "effect-levels/midi-audit.jsonl": "e0676644ca41e9af7e93a7b81138152b9f0a291490932274d28bb3ff54b175ea",
+    "effect-levels/runtime-delta.patch": "7288594289a4e588cb03eaadc087c4d7b10b5df8e0c4c4188903c1b972e43e5b",
+    "effect-levels/source-snapshot.json": "c535b2aec8d4cee075d317743e38577e4feb1ec234f59dbce79f79fc00e9000f",
+    "effect-toggles/command.mjs": "d084d5d8e3a58272429bdc42fc31cd8d34ce1a0ba0f48c3b6600e62662f01c54",
+    "effect-toggles/guard.mjs": "a80f0b90a45af69fcd8af99a6ed4704c87292436fffe1c4046a0d9a305ca13fa",
+    "effect-toggles/mcp-report.json": "0d0a27c9dda29a361e83baead82104a3dd89363d1b11d8866263fe4a8adfa466",
+    "effect-toggles/midi-audit.jsonl": "e178fc64af5996fea661e074b7a0de447ffd671bef61ad24919bf511656e1eff",
+    "metal/mcp-report.json": "59eaf69ada89f1c58c84558ba7dd2e2b0f5d90e433dbec7d5067ae8ea746f611",
+    "metal/midi-audit.jsonl": "7713389b9809f7fc16470aa7ebb8af6c6dbf9b048e1c86240aee3585a8520bda"
+  }
+}

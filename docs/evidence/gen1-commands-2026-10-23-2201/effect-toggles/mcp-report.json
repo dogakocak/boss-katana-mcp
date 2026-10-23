@@ -1,0 +1,277 @@
+{
+  "request": "delay ekle ve reverb",
+  "status": "PASS",
+  "startedAtUtc": "2026-10-23T19:02:48.747Z",
+  "sourceRevision": "c3447953d68612971cc34e261338ce127f6eeb31",
+  "operatorAttestation": {
+    "writesApprovedPreviously": true,
+    "physicalMasterLowConfirmedPreviously": true
+  },
+  "calls": [
+    {
+      "name": "katana_gen1_connect",
+      "arguments": {},
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"backend\": \"gen1-midi\",\n  \"experimental\": true,\n  \"hardwareEnabled\": true,\n  \"connected\": true,\n  \"locked\": false,\n  \"modelConfirmedByOperator\": true,\n  \"firmware\": \"unknown\",\n  \"volumeWrites\": false,\n  \"temporaryLevelWriteCeiling\": 10,\n  \"writesEnabled\": true,\n  \"warning\": \"Cached connection state; physical liveness is checked by explicit I/O. MIDI identity cannot prove KATANA-50 submodel.\"\n}"
+          }
+        ]
+      }
+    },
+    {
+      "name": "katana_gen1_read",
+      "arguments": {
+        "key": "TemporaryLevel",
+        "explicitResearch": true
+      },
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"key\": \"TemporaryLevel\",\n  \"raw\": 5,\n  \"research\": false,\n  \"atomicSnapshot\": false,\n  \"hardwareVerifiedImplementation\": false\n}"
+          }
+        ]
+      }
+    },
+    {
+      "name": "katana_gen1_read",
+      "arguments": {
+        "key": "DelayTime",
+        "explicitResearch": true
+      },
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"key\": \"DelayTime\",\n  \"raw\": 456,\n  \"research\": true,\n  \"atomicSnapshot\": false,\n  \"hardwareVerifiedImplementation\": false\n}"
+          }
+        ]
+      }
+    },
+    {
+      "name": "katana_gen1_read",
+      "arguments": {
+        "key": "DelayFeedback",
+        "explicitResearch": true
+      },
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"key\": \"DelayFeedback\",\n  \"raw\": 35,\n  \"research\": true,\n  \"atomicSnapshot\": false,\n  \"hardwareVerifiedImplementation\": false\n}"
+          }
+        ]
+      }
+    },
+    {
+      "name": "katana_gen1_read",
+      "arguments": {
+        "key": "ReverbLevel",
+        "explicitResearch": true
+      },
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"key\": \"ReverbLevel\",\n  \"raw\": 0,\n  \"research\": true,\n  \"atomicSnapshot\": false,\n  \"hardwareVerifiedImplementation\": false\n}"
+          }
+        ]
+      }
+    },
+    {
+      "name": "katana_gen1_set",
+      "arguments": {
+        "key": "DelayOn",
+        "value": 1
+      },
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"key\": \"DelayOn\",\n  \"before\": 0,\n  \"raw\": 1,\n  \"readbackVerified\": true,\n  \"experimental\": true,\n  \"savedToPatch\": false\n}"
+          }
+        ]
+      }
+    },
+    {
+      "name": "katana_gen1_set",
+      "arguments": {
+        "key": "ReverbOn",
+        "value": 1
+      },
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"key\": \"ReverbOn\",\n  \"before\": 0,\n  \"raw\": 1,\n  \"readbackVerified\": true,\n  \"experimental\": true,\n  \"savedToPatch\": false\n}"
+          }
+        ]
+      }
+    },
+    {
+      "name": "katana_gen1_read",
+      "arguments": {
+        "key": "DelayOn"
+      },
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"key\": \"DelayOn\",\n  \"raw\": 1,\n  \"research\": false,\n  \"atomicSnapshot\": false,\n  \"hardwareVerifiedImplementation\": false\n}"
+          }
+        ]
+      }
+    },
+    {
+      "name": "katana_gen1_read",
+      "arguments": {
+        "key": "ReverbOn"
+      },
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"key\": \"ReverbOn\",\n  \"raw\": 1,\n  \"research\": false,\n  \"atomicSnapshot\": false,\n  \"hardwareVerifiedImplementation\": false\n}"
+          }
+        ]
+      }
+    },
+    {
+      "name": "katana_gen1_read",
+      "arguments": {
+        "key": "TemporaryLevel"
+      },
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"key\": \"TemporaryLevel\",\n  \"raw\": 5,\n  \"research\": false,\n  \"atomicSnapshot\": false,\n  \"hardwareVerifiedImplementation\": false\n}"
+          }
+        ]
+      }
+    },
+    {
+      "name": "katana_gen1_disconnect",
+      "arguments": {},
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"backend\": \"gen1-midi\",\n  \"experimental\": true,\n  \"hardwareEnabled\": true,\n  \"connected\": false,\n  \"locked\": false,\n  \"modelConfirmedByOperator\": true,\n  \"firmware\": \"unknown\",\n  \"volumeWrites\": false,\n  \"temporaryLevelWriteCeiling\": 10,\n  \"writesEnabled\": true,\n  \"warning\": \"Cached connection state; physical liveness is checked by explicit I/O. MIDI identity cannot prove KATANA-50 submodel.\"\n}"
+          }
+        ]
+      }
+    }
+  ],
+  "failure": null,
+  "cleanupFailure": null,
+  "runnerSha256": "d084d5d8e3a58272429bdc42fc31cd8d34ce1a0ba0f48c3b6600e62662f01c54",
+  "guardSha256": "a80f0b90a45af69fcd8af99a6ed4704c87292436fffe1c4046a0d9a305ca13fa",
+  "stderr": "",
+  "connection": {
+    "backend": "gen1-midi",
+    "experimental": true,
+    "hardwareEnabled": true,
+    "connected": true,
+    "locked": false,
+    "modelConfirmedByOperator": true,
+    "firmware": "unknown",
+    "volumeWrites": false,
+    "temporaryLevelWriteCeiling": 10,
+    "writesEnabled": true,
+    "warning": "Cached connection state; physical liveness is checked by explicit I/O. MIDI identity cannot prove KATANA-50 submodel."
+  },
+  "settings": {
+    "TemporaryLevel": {
+      "key": "TemporaryLevel",
+      "raw": 5,
+      "research": false,
+      "atomicSnapshot": false,
+      "hardwareVerifiedImplementation": false
+    },
+    "DelayTime": {
+      "key": "DelayTime",
+      "raw": 456,
+      "research": true,
+      "atomicSnapshot": false,
+      "hardwareVerifiedImplementation": false
+    },
+    "DelayFeedback": {
+      "key": "DelayFeedback",
+      "raw": 35,
+      "research": true,
+      "atomicSnapshot": false,
+      "hardwareVerifiedImplementation": false
+    },
+    "ReverbLevel": {
+      "key": "ReverbLevel",
+      "raw": 0,
+      "research": true,
+      "atomicSnapshot": false,
+      "hardwareVerifiedImplementation": false
+    }
+  },
+  "delay": {
+    "key": "DelayOn",
+    "before": 0,
+    "raw": 1,
+    "readbackVerified": true,
+    "experimental": true,
+    "savedToPatch": false
+  },
+  "reverb": {
+    "key": "ReverbOn",
+    "before": 0,
+    "raw": 1,
+    "readbackVerified": true,
+    "experimental": true,
+    "savedToPatch": false
+  },
+  "final": {
+    "DelayOn": {
+      "key": "DelayOn",
+      "raw": 1,
+      "research": false,
+      "atomicSnapshot": false,
+      "hardwareVerifiedImplementation": false
+    },
+    "ReverbOn": {
+      "key": "ReverbOn",
+      "raw": 1,
+      "research": false,
+      "atomicSnapshot": false,
+      "hardwareVerifiedImplementation": false
+    },
+    "TemporaryLevel": {
+      "key": "TemporaryLevel",
+      "raw": 5,
+      "research": false,
+      "atomicSnapshot": false,
+      "hardwareVerifiedImplementation": false
+    }
+  },
+  "disconnected": {
+    "backend": "gen1-midi",
+    "experimental": true,
+    "hardwareEnabled": true,
+    "connected": false,
+    "locked": false,
+    "modelConfirmedByOperator": true,
+    "firmware": "unknown",
+    "volumeWrites": false,
+    "temporaryLevelWriteCeiling": 10,
+    "writesEnabled": true,
+    "warning": "Cached connection state; physical liveness is checked by explicit I/O. MIDI identity cannot prove KATANA-50 submodel."
+  },
+  "audit": {
+    "sha256": "e178fc64af5996fea661e074b7a0de447ffd671bef61ad24919bf511656e1eff",
+    "identity": 1,
+    "rq1": 11,
+    "dt1": 2,
+    "blocked": 0,
+    "rx": 12
+  },
+  "completedAtUtc": "2026-10-23T19:02:49.428Z"
+}

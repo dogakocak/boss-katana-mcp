@@ -57,6 +57,46 @@ Describe a tone and the knobs in **BOSS TONE STUDIO** move live, as if you had t
 
 ## Install
 
+### Experimental Gen 1 support
+
+KATANA-50 Gen 1 has an isolated, **experimental** direct MIDI backend. Its
+**read-only adapter path was verified on one operator-labelled KATANA-50 Gen 1**
+on 2026-10-23: identity matched, all 20 addresses read successfully in 23
+transactions, start/end sentinels matched and ports closed cleanly. Firmware
+remains unknown; this is not a compatibility claim for other devices/firmware.
+Default startup and the existing Gen 3 tools are unchanged. Set
+`KATANA_BACKEND=gen1` to expose `katana_gen1_*` tools; hardware access is **off by
+default**, including discovery. Status and parameter listing work without a device.
+The optional native dependency is installed by `npm install`.
+
+The original 20 reads are retained; 11 additional source-backed effective controls
+were read during a later **explicitly approved metal-tone application on the same
+device**. That session passed identity, 70 RQ1, nine temporary DT1 writes with
+readback, and clean disconnect. It did not save a patch or alter firmware.
+Audible quality, other firmware and physical fault recovery remain unverified.
+
+`katana_gen1_apply_tone {"name":"metal"}` previews with **zero I/O** by default.
+Applying requires `dryRun:false`, a connection and both write/low-MASTER startup
+opt-ins. Bounded effective amp/Gain/EQ/effect-toggle/NS1 controls are also available
+through `katana_gen1_set`. Temporary LEVEL is capped at 10; the metal recipe ends
+at `min(previous LEVEL,5)`. Keep physical MASTER low. All panel/system, patch-save
+and firmware writes remain blocked; Gen 3 tone recipes do not apply to Gen 1.
+See [write support and its source evidence](docs/gen1-write-support.md) and the
+[approved physical session report](docs/gen1-hardware-metal-2026-10-23.md).
+
+The later operator-commanded delay/reverb extension adds `DelayLevel` and bounded
+`ReverbLevel` writes (0..50): 32 readable keys, 16 writable effective controls.
+Both effects ON and wet levels 15 passed readback on the recorded device; audible
+quality remains unverified. Details are in the [command journal](docs/gen1-user-command-log.md).
+
+See [architecture and source evidence](docs/gen1-architecture.md),
+[compatibility and opt-ins](docs/gen1-compatibility.md), and
+[test plan](docs/gen1-test-plan.md). The
+[physical read-only report and raw evidence](docs/gen1-hardware-readonly-2026-10-23.md)
+include all values, checksums and an offline evidence verifier.
+
+### Gen 3 setup
+
 **You need:** Windows 10/11 · a KATANA Gen 3 on USB · BOSS TONE STUDIO for KATANA Gen 3 (tested 1.1.0) ·
 Node.js 24+ · Claude Code, Codex CLI or Gemini CLI.
 

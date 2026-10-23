@@ -1,0 +1,10 @@
+{
+  "captureSourceRevision": "51b55a6194cd3c4060e173f5f0e82c7d41a28711",
+  "captureGitTree": "837d4c4b34f17dc0a116b652150dd13005720057",
+  "sha256": {
+    "Apply-Gen1Metal.mjs": "bd7511e81178654fb420767dcd96272f5230bd6ff142534b7c687c337ce67aaa",
+    "Gen1MetalGuard.mjs": "c3390b0e82c4bfb25f3046207f4874cadd7e6adc388f91682880eca44d687ddc",
+    "mcp-report.json": "6f36fce56817c82523ad9cd567921db80ba0be14ff217b660a980c747709bd11",
+    "midi-audit.jsonl": "839070b752665da3a12c4e6be77bc02423b1ef46634130ec7a79db1bfa301bf8"
+  }
+}

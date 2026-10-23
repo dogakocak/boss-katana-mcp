@@ -1,0 +1,62 @@
+{"sequence":1,"timeUtc":"2026-10-23T19:04:20.585Z","direction":"GUARD_READY","mode":"enable-delay-reverb-with-wet15-only"}
+{"sequence":2,"timeUtc":"2026-10-23T19:04:20.895Z","direction":"TX_ATTEMPT","key":"Identity","kind":"identity","hex":"F0 7E 7F 06 01 F7"}
+{"sequence":3,"timeUtc":"2026-10-23T19:04:20.896Z","direction":"TX_NATIVE_RETURNED","key":"Identity","kind":"identity","hex":"F0 7E 7F 06 01 F7"}
+{"sequence":4,"timeUtc":"2026-10-23T19:04:20.897Z","direction":"RX","hex":"F0 7E 00 06 02 41 33 03 00 00 00 00 00 00 F7"}
+{"sequence":5,"timeUtc":"2026-10-23T19:04:20.903Z","direction":"TX_ATTEMPT","key":"TemporaryLevel","kind":"read","hex":"F0 41 00 00 00 00 33 11 60 00 00 58 00 00 00 01 47 F7"}
+{"sequence":6,"timeUtc":"2026-10-23T19:04:20.903Z","direction":"TX_NATIVE_RETURNED","key":"TemporaryLevel","kind":"read","hex":"F0 41 00 00 00 00 33 11 60 00 00 58 00 00 00 01 47 F7"}
+{"sequence":7,"timeUtc":"2026-10-23T19:04:20.904Z","direction":"RX","hex":"F0 41 00 00 00 00 33 12 60 00 00 58 05 43 F7"}
+{"sequence":8,"timeUtc":"2026-10-23T19:04:20.907Z","direction":"TX_ATTEMPT","key":"DelayTime","kind":"read","hex":"F0 41 00 00 00 00 33 11 60 00 05 62 00 00 00 02 37 F7"}
+{"sequence":9,"timeUtc":"2026-10-23T19:04:20.907Z","direction":"TX_NATIVE_RETURNED","key":"DelayTime","kind":"read","hex":"F0 41 00 00 00 00 33 11 60 00 05 62 00 00 00 02 37 F7"}
+{"sequence":10,"timeUtc":"2026-10-23T19:04:20.926Z","direction":"RX","hex":"F0 41 00 00 00 00 33 12 60 00 05 62 03 48 6E F7"}
+{"sequence":11,"timeUtc":"2026-10-23T19:04:20.928Z","direction":"TX_ATTEMPT","key":"DelayFeedback","kind":"read","hex":"F0 41 00 00 00 00 33 11 60 00 05 64 00 00 00 01 36 F7"}
+{"sequence":12,"timeUtc":"2026-10-23T19:04:20.929Z","direction":"TX_NATIVE_RETURNED","key":"DelayFeedback","kind":"read","hex":"F0 41 00 00 00 00 33 11 60 00 05 64 00 00 00 01 36 F7"}
+{"sequence":13,"timeUtc":"2026-10-23T19:04:20.948Z","direction":"RX","hex":"F0 41 00 00 00 00 33 12 60 00 05 64 23 14 F7"}
+{"sequence":14,"timeUtc":"2026-10-23T19:04:20.951Z","direction":"TX_ATTEMPT","key":"ReverbLevel","kind":"read","hex":"F0 41 00 00 00 00 33 11 60 00 06 18 00 00 00 01 01 F7"}
+{"sequence":15,"timeUtc":"2026-10-23T19:04:20.951Z","direction":"TX_NATIVE_RETURNED","key":"ReverbLevel","kind":"read","hex":"F0 41 00 00 00 00 33 11 60 00 06 18 00 00 00 01 01 F7"}
+{"sequence":16,"timeUtc":"2026-10-23T19:04:20.970Z","direction":"RX","hex":"F0 41 00 00 00 00 33 12 60 00 06 18 00 02 F7"}
+{"sequence":17,"timeUtc":"2026-10-23T19:04:20.973Z","direction":"TX_ATTEMPT","key":"DelayLevel","kind":"read","hex":"F0 41 00 00 00 00 33 11 60 00 05 66 00 00 00 01 34 F7"}
+{"sequence":18,"timeUtc":"2026-10-23T19:04:20.974Z","direction":"TX_NATIVE_RETURNED","key":"DelayLevel","kind":"read","hex":"F0 41 00 00 00 00 33 11 60 00 05 66 00 00 00 01 34 F7"}
+{"sequence":19,"timeUtc":"2026-10-23T19:04:20.992Z","direction":"RX","hex":"F0 41 00 00 00 00 33 12 60 00 05 66 00 35 F7"}
+{"sequence":20,"timeUtc":"2026-10-23T19:04:20.995Z","direction":"TX_ATTEMPT","key":"DelayOn","kind":"read","hex":"F0 41 00 00 00 00 33 11 60 00 05 60 00 00 00 01 3A F7"}
+{"sequence":21,"timeUtc":"2026-10-23T19:04:20.996Z","direction":"TX_NATIVE_RETURNED","key":"DelayOn","kind":"read","hex":"F0 41 00 00 00 00 33 11 60 00 05 60 00 00 00 01 3A F7"}
+{"sequence":22,"timeUtc":"2026-10-23T19:04:21.014Z","direction":"RX","hex":"F0 41 00 00 00 00 33 12 60 00 05 60 01 3A F7"}
+{"sequence":23,"timeUtc":"2026-10-23T19:04:21.014Z","direction":"TX_ATTEMPT","key":"DelayOn","kind":"read","hex":"F0 41 00 00 00 00 33 11 60 00 05 60 00 00 00 01 3A F7"}
+{"sequence":24,"timeUtc":"2026-10-23T19:04:21.015Z","direction":"TX_NATIVE_RETURNED","key":"DelayOn","kind":"read","hex":"F0 41 00 00 00 00 33 11 60 00 05 60 00 00 00 01 3A F7"}
+{"sequence":25,"timeUtc":"2026-10-23T19:04:21.036Z","direction":"RX","hex":"F0 41 00 00 00 00 33 12 60 00 05 60 01 3A F7"}
+{"sequence":26,"timeUtc":"2026-10-23T19:04:21.039Z","direction":"TX_ATTEMPT","key":"ReverbOn","kind":"read","hex":"F0 41 00 00 00 00 33 11 60 00 06 10 00 00 00 01 09 F7"}
+{"sequence":27,"timeUtc":"2026-10-23T19:04:21.039Z","direction":"TX_NATIVE_RETURNED","key":"ReverbOn","kind":"read","hex":"F0 41 00 00 00 00 33 11 60 00 06 10 00 00 00 01 09 F7"}
+{"sequence":28,"timeUtc":"2026-10-23T19:04:21.058Z","direction":"RX","hex":"F0 41 00 00 00 00 33 12 60 00 06 10 01 09 F7"}
+{"sequence":29,"timeUtc":"2026-10-23T19:04:21.059Z","direction":"TX_ATTEMPT","key":"ReverbOn","kind":"read","hex":"F0 41 00 00 00 00 33 11 60 00 06 10 00 00 00 01 09 F7"}
+{"sequence":30,"timeUtc":"2026-10-23T19:04:21.059Z","direction":"TX_NATIVE_RETURNED","key":"ReverbOn","kind":"read","hex":"F0 41 00 00 00 00 33 11 60 00 06 10 00 00 00 01 09 F7"}
+{"sequence":31,"timeUtc":"2026-10-23T19:04:21.080Z","direction":"RX","hex":"F0 41 00 00 00 00 33 12 60 00 06 10 01 09 F7"}
+{"sequence":32,"timeUtc":"2026-10-23T19:04:21.083Z","direction":"TX_ATTEMPT","key":"DelayLevel","kind":"read","hex":"F0 41 00 00 00 00 33 11 60 00 05 66 00 00 00 01 34 F7"}
+{"sequence":33,"timeUtc":"2026-10-23T19:04:21.083Z","direction":"TX_NATIVE_RETURNED","key":"DelayLevel","kind":"read","hex":"F0 41 00 00 00 00 33 11 60 00 05 66 00 00 00 01 34 F7"}
+{"sequence":34,"timeUtc":"2026-10-23T19:04:21.102Z","direction":"RX","hex":"F0 41 00 00 00 00 33 12 60 00 05 66 00 35 F7"}
+{"sequence":35,"timeUtc":"2026-10-23T19:04:21.102Z","direction":"TX_ATTEMPT","key":"DelayLevel","kind":"write","hex":"F0 41 00 00 00 00 33 12 60 00 05 66 0F 26 F7"}
+{"sequence":36,"timeUtc":"2026-10-23T19:04:21.103Z","direction":"TX_NATIVE_RETURNED","key":"DelayLevel","kind":"write","hex":"F0 41 00 00 00 00 33 12 60 00 05 66 0F 26 F7"}
+{"sequence":37,"timeUtc":"2026-10-23T19:04:21.104Z","direction":"TX_ATTEMPT","key":"DelayLevel","kind":"read","hex":"F0 41 00 00 00 00 33 11 60 00 05 66 00 00 00 01 34 F7"}
+{"sequence":38,"timeUtc":"2026-10-23T19:04:21.104Z","direction":"TX_NATIVE_RETURNED","key":"DelayLevel","kind":"read","hex":"F0 41 00 00 00 00 33 11 60 00 05 66 00 00 00 01 34 F7"}
+{"sequence":39,"timeUtc":"2026-10-23T19:04:21.124Z","direction":"RX","hex":"F0 41 00 00 00 00 33 12 60 00 05 66 0F 26 F7"}
+{"sequence":40,"timeUtc":"2026-10-23T19:04:21.127Z","direction":"TX_ATTEMPT","key":"ReverbLevel","kind":"read","hex":"F0 41 00 00 00 00 33 11 60 00 06 18 00 00 00 01 01 F7"}
+{"sequence":41,"timeUtc":"2026-10-23T19:04:21.127Z","direction":"TX_NATIVE_RETURNED","key":"ReverbLevel","kind":"read","hex":"F0 41 00 00 00 00 33 11 60 00 06 18 00 00 00 01 01 F7"}
+{"sequence":42,"timeUtc":"2026-10-23T19:04:21.146Z","direction":"RX","hex":"F0 41 00 00 00 00 33 12 60 00 06 18 00 02 F7"}
+{"sequence":43,"timeUtc":"2026-10-23T19:04:21.146Z","direction":"TX_ATTEMPT","key":"ReverbLevel","kind":"write","hex":"F0 41 00 00 00 00 33 12 60 00 06 18 0F 73 F7"}
+{"sequence":44,"timeUtc":"2026-10-23T19:04:21.147Z","direction":"TX_NATIVE_RETURNED","key":"ReverbLevel","kind":"write","hex":"F0 41 00 00 00 00 33 12 60 00 06 18 0F 73 F7"}
+{"sequence":45,"timeUtc":"2026-10-23T19:04:21.147Z","direction":"TX_ATTEMPT","key":"ReverbLevel","kind":"read","hex":"F0 41 00 00 00 00 33 11 60 00 06 18 00 00 00 01 01 F7"}
+{"sequence":46,"timeUtc":"2026-10-23T19:04:21.148Z","direction":"TX_NATIVE_RETURNED","key":"ReverbLevel","kind":"read","hex":"F0 41 00 00 00 00 33 11 60 00 06 18 00 00 00 01 01 F7"}
+{"sequence":47,"timeUtc":"2026-10-23T19:04:21.168Z","direction":"RX","hex":"F0 41 00 00 00 00 33 12 60 00 06 18 0F 73 F7"}
+{"sequence":48,"timeUtc":"2026-10-23T19:04:21.171Z","direction":"TX_ATTEMPT","key":"DelayOn","kind":"read","hex":"F0 41 00 00 00 00 33 11 60 00 05 60 00 00 00 01 3A F7"}
+{"sequence":49,"timeUtc":"2026-10-23T19:04:21.171Z","direction":"TX_NATIVE_RETURNED","key":"DelayOn","kind":"read","hex":"F0 41 00 00 00 00 33 11 60 00 05 60 00 00 00 01 3A F7"}
+{"sequence":50,"timeUtc":"2026-10-23T19:04:21.190Z","direction":"RX","hex":"F0 41 00 00 00 00 33 12 60 00 05 60 01 3A F7"}
+{"sequence":51,"timeUtc":"2026-10-23T19:04:21.192Z","direction":"TX_ATTEMPT","key":"ReverbOn","kind":"read","hex":"F0 41 00 00 00 00 33 11 60 00 06 10 00 00 00 01 09 F7"}
+{"sequence":52,"timeUtc":"2026-10-23T19:04:21.193Z","direction":"TX_NATIVE_RETURNED","key":"ReverbOn","kind":"read","hex":"F0 41 00 00 00 00 33 11 60 00 06 10 00 00 00 01 09 F7"}
+{"sequence":53,"timeUtc":"2026-10-23T19:04:21.212Z","direction":"RX","hex":"F0 41 00 00 00 00 33 12 60 00 06 10 01 09 F7"}
+{"sequence":54,"timeUtc":"2026-10-23T19:04:21.215Z","direction":"TX_ATTEMPT","key":"TemporaryLevel","kind":"read","hex":"F0 41 00 00 00 00 33 11 60 00 00 58 00 00 00 01 47 F7"}
+{"sequence":55,"timeUtc":"2026-10-23T19:04:21.215Z","direction":"TX_NATIVE_RETURNED","key":"TemporaryLevel","kind":"read","hex":"F0 41 00 00 00 00 33 11 60 00 00 58 00 00 00 01 47 F7"}
+{"sequence":56,"timeUtc":"2026-10-23T19:04:21.234Z","direction":"RX","hex":"F0 41 00 00 00 00 33 12 60 00 00 58 05 43 F7"}
+{"sequence":57,"timeUtc":"2026-10-23T19:04:21.236Z","direction":"TX_ATTEMPT","key":"DelayLevel","kind":"read","hex":"F0 41 00 00 00 00 33 11 60 00 05 66 00 00 00 01 34 F7"}
+{"sequence":58,"timeUtc":"2026-10-23T19:04:21.237Z","direction":"TX_NATIVE_RETURNED","key":"DelayLevel","kind":"read","hex":"F0 41 00 00 00 00 33 11 60 00 05 66 00 00 00 01 34 F7"}
+{"sequence":59,"timeUtc":"2026-10-23T19:04:21.256Z","direction":"RX","hex":"F0 41 00 00 00 00 33 12 60 00 05 66 0F 26 F7"}
+{"sequence":60,"timeUtc":"2026-10-23T19:04:21.258Z","direction":"TX_ATTEMPT","key":"ReverbLevel","kind":"read","hex":"F0 41 00 00 00 00 33 11 60 00 06 18 00 00 00 01 01 F7"}
+{"sequence":61,"timeUtc":"2026-10-23T19:04:21.259Z","direction":"TX_NATIVE_RETURNED","key":"ReverbLevel","kind":"read","hex":"F0 41 00 00 00 00 33 11 60 00 06 18 00 00 00 01 01 F7"}
+{"sequence":62,"timeUtc":"2026-10-23T19:04:21.278Z","direction":"RX","hex":"F0 41 00 00 00 00 33 12 60 00 06 18 0F 73 F7"}

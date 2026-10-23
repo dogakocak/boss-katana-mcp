@@ -1,0 +1,10 @@
+{
+  "baseCommit": "c3447953d68612971cc34e261338ce127f6eeb31",
+  "workingTreeExtensionPresent": true,
+  "capturedAfterRunWithoutInterveningRuntimeEdits": true,
+  "sha256": {
+    "captured-parameters.ts": "77723adb6d44c28c632e9705bfeb184c477f11201e9f3b210b1fb64ddfe7973f",
+    "captured-parameters.js": "ccbfaa530f700799c05a5a838fe16291207addd0f3fefe8bdb409701975d956a",
+    "runtime-delta.patch": "7288594289a4e588cb03eaadc087c4d7b10b5df8e0c4c4188903c1b972e43e5b"
+  }
+}
