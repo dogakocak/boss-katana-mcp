@@ -24,8 +24,17 @@ export interface Sandbox {
   tick(): void;
 }
 
+export interface SandboxOptions {
+  /** More BTS files (relative to html/), loaded after FILES in this order. */
+  files?: string[];
+  /** Extra globals on the page window (e.g. a jQuery stand-in). */
+  globals?: Record<string, unknown>;
+  /** Extra members of $native besides midi (e.g. app.storage2). */
+  native?: Record<string, unknown>;
+}
+
 /** Loads BTS's own parameter/MIDI scripts into an isolated vm context, like the WebView page. */
-export function createSandbox(): Sandbox {
+export function createSandbox(opts: SandboxOptions = {}): Sandbox {
   const sent: string[] = [];
   let intervalCallback: (() => void) | undefined;
   const midi = {
@@ -36,12 +45,14 @@ export function createSandbox(): Sandbox {
     console, setTimeout, clearTimeout,
     // Stores the callback instead of invoking it, so MIDIController's queue only drains on tick().
     setInterval: (fn: () => void) => { intervalCallback = fn; return 0; },
-    navigator: { language: 'en' },
-    $native: { midi },
+    clearInterval: () => {},
+    navigator: { language: 'en', userAgent: 'Chrome' },
+    $native: { midi, ...opts.native },
+    ...opts.globals,
   };
   win.window = win;
   const ctx = vm.createContext(win);
-  for (const f of FILES) vm.runInContext(readFileSync(join(BTS_HTML, f), 'utf8'), ctx, { filename: f });
+  for (const f of [...FILES, ...(opts.files ?? [])]) vm.runInContext(readFileSync(join(BTS_HTML, f), 'utf8'), ctx, { filename: f });
   return {
     run: <T>(code: string) => vm.runInContext(code, ctx) as T,
     incoming: (msg: string) => midi.event.message!(msg, 0),

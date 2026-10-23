@@ -29,7 +29,7 @@ export async function btsReachable(port = 9222): Promise<boolean> {
 }
 
 /** Opens a one-shot CDP session to the BTS page, evaluates, closes. */
-export async function evaluateInBts<T>(expression: string, port = 9222): Promise<T> {
+export async function evaluateInBts<T>(expression: string, port = 9222, timeoutMs = 10000): Promise<T> {
   const target = pickTarget(await listTargets(port));
   if (!target?.webSocketDebuggerUrl) throw new BtsUnavailableError(NOT_RUNNING);
   if (!isLocalDebuggerUrl(target.webSocketDebuggerUrl, port)) {
@@ -53,7 +53,7 @@ export async function evaluateInBts<T>(expression: string, port = 9222): Promise
         ws.removeEventListener('error', onClose);
         fn();
       };
-      const timer = setTimeout(() => settle(() => reject(new Error('CDP evaluate timed out'))), 10000);
+      const timer = setTimeout(() => settle(() => reject(new Error('CDP evaluate timed out'))), timeoutMs);
       const onClose = () => settle(() => reject(new BtsUnavailableError('BOSS TONE STUDIO closed the DevTools connection before replying.')));
       const onMessage = (ev: MessageEvent) => {
         const msg = JSON.parse(String(ev.data));
