@@ -37,6 +37,7 @@ describe('tsl files', () => {
 
   it.each([
     ['not json', 'not a .tsl file (not JSON)'],
+    ['null', 'is not a BOSS TONE STUDIO liveset (.tsl) file'],
     ['{"name":"X"}', 'is not a BOSS TONE STUDIO liveset (.tsl) file'],
     [tsl(16), 'holds 16 patches; a liveset holds at most 15'],
   ])('rejects %j', async (content, msg) => {

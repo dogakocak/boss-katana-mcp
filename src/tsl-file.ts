@@ -38,7 +38,8 @@ export async function readTsl(path: string): Promise<{ json: string; name: strin
   let o: unknown;
   try { o = JSON.parse(text); } catch { throw new LibraryError(`${path} is not a .tsl file (not JSON).`); }
   const t = o as { name?: unknown; formatRev?: unknown; device?: unknown; data?: unknown };
-  if (typeof t.name !== 'string' || typeof t.formatRev !== 'string' || typeof t.device !== 'string'
+  if (o === null || typeof o !== 'object'
+    || typeof t.name !== 'string' || typeof t.formatRev !== 'string' || typeof t.device !== 'string'
     || !Array.isArray(t.data) || !Array.isArray(t.data[0])) {
     throw new LibraryError(`${path} is not a BOSS TONE STUDIO liveset (.tsl) file.`);
   }
