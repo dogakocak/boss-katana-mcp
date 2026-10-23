@@ -11,6 +11,7 @@ function fakeBts(starts: ConnectStart[], connectedAfter = Infinity) {
     status: async () => ({ connected: statusCalls++ >= connectedAfter, patchName: statusCalls > connectedAfter ? 'DELI' : 'KATANA', colors: [0, 0, 0, 0, 0] }),
     connect: async () => { const r = starts[Math.min(connects.length, starts.length - 1)]; connects.push(r); return r; },
     index: async () => [], read: async () => ({}), write: async () => ({}),
+    controls: async () => ({ gafc: true, readings: [] }),
   };
   return { bts, connects };
 }

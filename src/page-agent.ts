@@ -22,7 +22,7 @@ function fnv1aHex(str: string): string {
  * Runs inside the BTS WebView page (plain ES5-ish JS, no imports).
  * Uses BTS globals: AddressMap, Parameter, $native, _7bitize, hex2, STX, ROLAND, DT1, EOX,
  * ProductSetting, INTEGER* size constants, currentMIDIConnect, and for connect(): $ (jQuery), util, midiConnectionController,
- * btsDOMController, popup_close.
+ * btsDOMController, popup_close. controls() additionally uses _load and modelInfo.
  *
  * `__KATANA_CLAUDE_AGENT_VERSION__` is a placeholder substituted below with a hash of this
  * body, so the IIFE's guard rejects (and replaces) any agent left by a different build.
@@ -135,7 +135,24 @@ const AGENT_BODY = String.raw`(function () {
     return { started: true, device: katanas[0].MIDIDeviceNameKey };
   }
 
-  window.__katanaClaude = { v: __KATANA_CLAUDE_AGENT_VERSION__, index: index, read: read, write: write, status: status, connect: connect };
+  // Footswitch / expression pedal assignments. Values from the parameter buffers; option names from
+  // BTS's own select boxes, mapped through item.json's list_order because display order differs from
+  // value order and a never-shown box can still display a stale label.
+  var itemData = null;
+  function controls(defs) {
+    if (!itemData) itemData = JSON.parse(_load('export/item.json'));
+    var readings = defs.map(function (d) {
+      var value = Parameter.value(d.pid, INTEGER1x7, 0);
+      var options = $('#' + d.elementId + ' .elf-select-box-option-control').map(function () { return $(this).text().trim(); }).get();
+      var item = itemData[d.elementId] || {};
+      var order = item.list_order || options.map(function (_, i) { return i; });
+      var pos = order.indexOf(value);
+      return { key: d.key, value: value, label: pos >= 0 && pos < options.length ? options[pos] : null };
+    });
+    return { gafc: window.modelInfo ? !!modelInfo.config().config.gafc : true, readings: readings };
+  }
+
+  window.__katanaClaude = { v: __KATANA_CLAUDE_AGENT_VERSION__, index: index, read: read, write: write, status: status, connect: connect, controls: controls };
 })();`;
 
 // The version covers both bodies, so a library change also replaces an installed agent.
@@ -143,7 +160,7 @@ const AGENT_VERSION = JSON.stringify(fnv1aHex(AGENT_BODY + LIBRARY_BODY));
 export const PAGE_AGENT_SOURCE =
   AGENT_BODY.replace(/__KATANA_CLAUDE_AGENT_VERSION__/g, AGENT_VERSION) + '\n' + LIBRARY_BODY;
 
-export function agentCall(method: 'index' | 'read' | 'write' | 'status' | 'connect', arg?: unknown): string {
+export function agentCall(method: 'index' | 'read' | 'write' | 'status' | 'connect' | 'controls', arg?: unknown): string {
   const args = arg === undefined ? '' : JSON.stringify(arg);
   return `${PAGE_AGENT_SOURCE}\nwindow.__katanaClaude.${method}(${args})`;
 }

@@ -16,6 +16,7 @@ function sandboxBts(connected = true): BtsClient & { sb: ReturnType<typeof creat
     read: async (pids: string[]) => sb.run(agentCall('read', pids)),
     write: async (c: WriteChange[]) => sb.run(agentCall('write', c)),
     connect: async () => ({ started: false, already: true }),
+    controls: async (defs) => ({ gafc: true, readings: defs.map(d => ({ key: d.key, value: 0, label: 'X' })) }),
   };
 }
 const json = (r: { content: { text: string }[] }) => JSON.parse(r.content[0].text);
@@ -71,6 +72,7 @@ describe.skipIf(!btsInstalled)('tools', () => {
     const down: BtsClient = {
       status: async () => { throw new BtsUnavailableError('BOSS TONE STUDIO is not reachable'); },
       index: async () => [], read: async () => ({}), write: async () => ({}), connect: async () => ({ started: false }),
+      controls: async () => ({ gafc: true, readings: [] }),
     };
     const r = await createHandlers({ bts: down, launch: noLaunch }).status();
     expect(r).toEqual({ isError: true, content: [{ type: 'text', text: 'BOSS TONE STUDIO is not reachable' }] });
@@ -92,5 +94,14 @@ describe.skipIf(!btsInstalled)('tools', () => {
     });
     expect((await h.launch()).isError).toBe(true);
     expect(tried).toBe(false);
+  });
+
+  it('controls reports assignments with a note and a warning when no amp is connected', async () => {
+    const h = createHandlers({ bts: sandboxBts(false), launch: noLaunch });
+    const out = json(await h.controls());
+    expect(out.patch['amp.foot_sw_tip']).toBe('X');
+    expect(out.system['gafc.panel']).toBe('X');
+    expect(out.note).toContain('physically plugged in');
+    expect(out.warnings[0]).toContain('No KATANA is connected');
   });
 });

@@ -4,6 +4,7 @@ import type { BtsClient } from './bts.js';
 import { activeOnly, buildParams, CatalogError, describe, type Param, resolveChanges, SECTIONS } from './catalog.js';
 import { BtsUnavailableError } from './cdp.js';
 import { connectAndWait, type ConnectResult } from './connect.js';
+import { CONTROLS, describeControls } from './controls.js';
 import type { LaunchResult } from './launcher.js';
 
 export interface ToolDeps {
@@ -71,6 +72,12 @@ export function createHandlers({ bts, launch, connect = () => connectAndWait(bts
         .map(({ key, min, max, options, boolean }) => ({ key, min, max, ...(options && { options }), ...(boolean && { boolean }) })));
     }),
 
+    controls: () => guard(async () => {
+      const st = await bts.status();
+      const r = await bts.controls(CONTROLS.map(({ key, pid, elementId }) => ({ key, pid, elementId })));
+      return ok(describeControls(r.readings, { gafc: r.gafc, connected: st.connected }));
+    }),
+
     launch: () => guard(async () => {
       const r = await launch();
       if (!r.ok) return fail(r.message);
@@ -113,4 +120,10 @@ export function registerKatanaTools(server: McpServer, deps: ToolDeps): void {
     description: 'List the keys of one section with their ranges and option names (for MOD/FX this includes every effect type\'s detail parameters).',
     inputSchema: { section },
   }, args => h.listParams(args));
+
+  server.registerTool('katana_controls', {
+    description: 'Show what the footswitches and expression pedals do: the amp\'s FOOT SW (tip/ring) and EXP PEDAL jacks and the GA-FC / GA-FC EX ' +
+      'switches and pedals for the current patch, plus the GA-FC global switch functions. Read-only. BOSS TONE STUDIO cannot detect which ' +
+      'pedals are physically plugged in; these are the assignments.',
+  }, () => h.controls());
 }
