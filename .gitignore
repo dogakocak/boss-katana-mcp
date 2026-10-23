@@ -25,3 +25,6 @@ desktop.ini
 .superpowers/
 .claude/
 docs/superpowers/
+
+# Python
+__pycache__/

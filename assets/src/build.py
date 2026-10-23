@@ -154,7 +154,7 @@ def hero():
     <div style="font-size:76px;font-weight:800;line-height:1.05;margin-top:34px;white-space:nowrap">boss-katana<span class="coral">-mcp</span></div>
     <div style="font-size:34px;margin-top:26px;line-height:1.4">Say the tone.<br>The knobs turn themselves.</div>
     <div style="display:flex;gap:56px;margin-top:64px">
-      <div><div style="font-size:64px;font-weight:800">6</div><div class="muted" style="font-size:22px;margin-top:6px">MCP tools</div></div>
+      <div><div style="font-size:64px;font-weight:800">20</div><div class="muted" style="font-size:22px;margin-top:6px">MCP tools</div></div>
       <div><div style="font-size:64px;font-weight:800">13</div><div class="muted" style="font-size:22px;margin-top:6px">sections</div></div>
       <div><div style="font-size:64px;font-weight:800">3</div><div class="muted" style="font-size:22px;margin-top:6px">agents</div></div>
       <div><div style="font-size:64px;font-weight:800" class="coral">0</div><div class="muted" style="font-size:22px;margin-top:6px">clicks</div></div>
@@ -228,7 +228,7 @@ def how_it_works():
   <div style="display:flex;align-items:stretch;margin-top:70px">
     {node("Your agent", "Claude Code<br>Codex CLI<br>Gemini CLI")}
     {link("stdio<br>MCP")}
-    {node("katana<br>MCP server", "6 tools, friendly keys like amp.gain", True)}
+    {node("katana<br>MCP server", "20 tools, friendly keys like amp.gain", True)}
     {link("DevTools<br>Protocol<br>:9222")}
     {node("BOSS TONE<br>STUDIO", "its own code writes the value and redraws the knob")}
     {link("USB MIDI<br>SysEx DT1")}

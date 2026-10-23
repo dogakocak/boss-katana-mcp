@@ -24,12 +24,14 @@
 </p>
 
 <p align="center">
-  <img src="assets/hero.png" width="880" alt="boss-katana-mcp. Live in BOSS TONE STUDIO. Say the tone, the knobs turn themselves. 6 MCP tools, 13 sections, 3 agents, 0 clicks.">
+  <img src="assets/hero.png" width="880" alt="boss-katana-mcp. Live in BOSS TONE STUDIO. Say the tone, the knobs turn themselves. 20 MCP tools, 13 sections, 3 agents, 0 clicks.">
 </p>
 
 Talk to your **BOSS KATANA Gen 3** from [Claude Code](https://claude.com/claude-code),
 [Codex CLI](https://github.com/openai/codex) or [Gemini CLI](https://github.com/google-gemini/gemini-cli).
 Describe a tone and the knobs in **BOSS TONE STUDIO** move live, as if you had turned them yourself.
+Then save it to a channel on the amp, keep it in a liveset, share it as a `.tsl` file, or ask what your footswitches
+and pedals are set to do.
 
 ---
 
@@ -102,6 +104,9 @@ itself.
 > give me an 80s hard rock lead tone
 > a bit less gain, more middle
 > volume 12
+> save it to B2 as "80S LEAD"
+> add it to a liveset called Gig and export that as a .tsl file
+> what do my GA-FC footswitches do?
 ```
 
 > [!NOTE]
@@ -149,7 +154,8 @@ program talking to the amp. The `katana-tone` skill tells the agent how to turn 
 | Symptom | Fix |
 | --- | --- |
 | `BOSS TONE STUDIO is not reachable` | Run `Enable-BossKatanaMcp.ps1`, then restart BOSS TONE STUDIO |
-| `ampConnected: false` | Check power and USB, then ask the agent to reconnect |
+| `ampConnected: false` | Check power and USB, then ask the agent to reconnect (right after switching the amp on, the first try can time out while BOSS TONE STUDIO connects by itself; a second try works) |
+| `… holds "…". Ask the user, then call again with overwrite: true.` | Saving would replace a stored patch, liveset patch or file; the agent asks you before it overwrites |
 | Values look like defaults (`amp.volume 50`, patch `KATANA`) | The patch hasn't loaded yet; wait for `ampConnected: true` |
 | `running without the debug port` | Close BOSS TONE STUDIO and let the agent start it |
 | Port 9222 already in use | Close the other tool using it (e.g. a browser with remote debugging) |
