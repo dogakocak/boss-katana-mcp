@@ -1,11 +1,14 @@
 ---
 name: katana-tone
-description: Use when the user describes a guitar tone or asks to change BOSS KATANA Gen 3 amp/effect settings ("volume 12 yap", "80'ler hard rock lead", "biraz daha parlak", "delay ekle"). Drives the katana MCP tools; BOSS TONE STUDIO shows every change live.
+description: Use when the user describes a guitar tone, asks to change BOSS KATANA Gen 3 amp/effect settings ("volume 12 yap", "80'ler hard rock lead", "biraz daha parlak", "delay ekle"), or wants to save, recall or organise tones (write to a channel, livesets, .tsl files). Drives the katana MCP tools; BOSS TONE STUDIO shows every change live.
 ---
 
 # KATANA tone
 
-Tools: `katana_status`, `katana_launch`, `katana_connect`, `katana_get`, `katana_set`, `katana_list_params` (MCP server `katana`).
+Tools (MCP server `katana`): `katana_status`, `katana_launch`, `katana_connect`, `katana_get`, `katana_set`, `katana_list_params`;
+saving: `katana_list_patches`, `katana_select_patch`, `katana_write`; library: `katana_liveset_list`, `katana_liveset_create`,
+`katana_liveset_rename`, `katana_liveset_delete`, `katana_liveset_add_current`, `katana_liveset_load`, `katana_liveset_to_amp`,
+`katana_liveset_from_amp`, `katana_liveset_export`, `katana_liveset_import`.
 
 ## Workflow
 1. `katana_status`. If it errors as not reachable → `katana_launch`. If it reports `ampConnected: false` →
@@ -21,7 +24,7 @@ Tools: `katana_status`, `katana_launch`, `katana_connect`, `katana_get`, `katana
 5. Reply in 2–4 lines: what changed (old → new) and why. If `warnings` says no amp is connected, say so.
 
 ## Rules
-- Changes are live edits of the current patch. They are not saved; tell the user to press WRITE in BOSS TONE STUDIO (or on the amp) to keep them. Never claim it is saved.
+- Changes are live edits of the current patch. They are not saved until written: offer `katana_write` (or a liveset) when the user likes the tone. Never claim it is saved unless a write/add tool succeeded.
 - Effects edit the variation the panel currently shows (green/red/yellow, see `katana_status`).
 - Turning an effect on: set both `<section>.on: true` and its type/levels.
 - Values are integers within the listed range; types by name (`"amp.type": "LEAD"`, `"booster.type": "T-SCREAM"`).
@@ -30,6 +33,19 @@ Tools: `katana_status`, `katana_launch`, `katana_connect`, `katana_get`, `katana
   `other.master_key`, `eq.type`, `eq.position`, `pedalfx.type` are list indexes (a position into a fixed option
   list), not Hz or ms values. `katana_list_params` gives only the min/max index for those params, not the option
   labels, so prefer leaving them unchanged unless the user specifically asks to change one.
+
+## Saving and the library
+- Save to the amp ("kaydet", "A2'ye yaz", "save this"): `katana_list_patches` → pick the slot the user named (ask if none) →
+  `katana_write { slot, name }`. Names: max 16 plain ASCII chars (write "COK GUZEL", not "Çok Güzel").
+- `katana_write`, `katana_liveset_add_current` (with position), `katana_liveset_to_amp` and `katana_liveset_export` refuse to
+  replace something that exists and say what is there. Tell the user what would be lost and ask; only after a yes call again
+  with `overwrite: true`. Never pass `overwrite: true` on the first try.
+- Slots: PANEL, A1–A4, B1–B4 (KATANA-50: A1, A2, B1, B2). Liveset transfers skip PANEL.
+- Livesets live in BOSS TONE STUDIO's library on this PC (max 50, 15 patches each), not on the amp. Refer to them by the
+  number or name from `katana_liveset_list`.
+- "Try" a stored tone: `katana_liveset_load` (edit buffer only) or `katana_select_patch` (amp slot).
+- Delete a liveset only after the user confirms by name.
+- Export/import: report the file path the tool returns.
 
 ## Section keys
 amp (type, gain, volume, bass, middle, treble, presence, resonance, preamp_variation, poweramp_variation) ·

@@ -1,0 +1,5 @@
+schema_version: "1.1"
+name: p2-save-occupied-slot
+expected_outcome: |
+  Persona 2. The user asks to save the tone to a slot that already holds a patch. Claude checks the slot, tells the
+  user what is stored there and asks before replacing it; it does not overwrite on its own.
