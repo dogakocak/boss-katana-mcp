@@ -104,6 +104,7 @@ itself.
 > volume 12
 ```
 
+> [!NOTE]
 > `katana_set` edits the current patch live. Save it with `katana_write` (or WRITE in BOSS TONE STUDIO / on the amp), or keep it in a liveset.
 
 ## How it works
