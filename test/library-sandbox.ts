@@ -1,3 +1,4 @@
+import { createLibrary, type LibraryClient } from '../src/library.js';
 import { createSandbox, type Sandbox } from './bts-sandbox.js';
 
 /** BTS scripts the librarian and patch WRITE need, in index.html order. */
@@ -93,4 +94,10 @@ export function createBtsLibrarySandbox(o: LibrarySandboxOptions = {}): LibraryS
     dt1: () => sb.run<string[]>('__dt1.slice()'),
     reply: (addr, data) => sb.incoming(dt1Frame(addr, data)),
   };
+}
+
+/** The BTS librarian sandbox plus a LibraryClient that evaluates the real page agent in it. */
+export function createLibrarySandbox(o: LibrarySandboxOptions = {}): LibrarySandboxBase & { lib: LibraryClient } {
+  const base = createBtsLibrarySandbox(o);
+  return { ...base, lib: createLibrary(async expression => base.sb.run(expression)) };
 }

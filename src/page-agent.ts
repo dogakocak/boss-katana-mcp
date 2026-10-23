@@ -1,3 +1,5 @@
+import { LIBRARY_BODY } from './library-agent.js';
+
 export interface Leaf { bid: string; pid: string; name: string; size: number; ofs: number; min: number; max: number }
 export interface AgentStatus { connected: boolean; patchName: string; colors: number[] }
 export interface WriteChange { pid: string; value: number }
@@ -136,10 +138,23 @@ const AGENT_BODY = String.raw`(function () {
   window.__katanaClaude = { v: __KATANA_CLAUDE_AGENT_VERSION__, index: index, read: read, write: write, status: status, connect: connect };
 })();`;
 
-const AGENT_VERSION = JSON.stringify(fnv1aHex(AGENT_BODY));
-export const PAGE_AGENT_SOURCE = AGENT_BODY.replace(/__KATANA_CLAUDE_AGENT_VERSION__/g, AGENT_VERSION);
+// The version covers both bodies, so a library change also replaces an installed agent.
+const AGENT_VERSION = JSON.stringify(fnv1aHex(AGENT_BODY + LIBRARY_BODY));
+export const PAGE_AGENT_SOURCE =
+  AGENT_BODY.replace(/__KATANA_CLAUDE_AGENT_VERSION__/g, AGENT_VERSION) + '\n' + LIBRARY_BODY;
 
 export function agentCall(method: 'index' | 'read' | 'write' | 'status' | 'connect', arg?: unknown): string {
   const args = arg === undefined ? '' : JSON.stringify(arg);
   return `${PAGE_AGENT_SOURCE}\nwindow.__katanaClaude.${method}(${args})`;
+}
+
+export type LibraryMethod =
+  | 'patches' | 'selectPatch' | 'writePatch'
+  | 'livesets' | 'createLiveset' | 'renameLiveset' | 'deleteLiveset'
+  | 'addCurrent' | 'loadPatch' | 'toAmp' | 'fromAmp' | 'livesetJson' | 'importJson';
+
+/** Expression that installs the agent if needed and calls window.__katanaClaude.lib[method](...args). */
+export function libraryCall(method: LibraryMethod, args: unknown[] = []): string {
+  const list = args.map(a => (a === undefined ? 'undefined' : JSON.stringify(a))).join(', ');
+  return `${PAGE_AGENT_SOURCE}\nwindow.__katanaClaude.lib.${method}(${list})`;
 }
