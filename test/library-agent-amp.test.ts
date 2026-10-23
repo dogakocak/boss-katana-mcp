@@ -110,4 +110,35 @@ describe.skipIf(!btsInstalled)('library agent: amp operations', () => {
     instantLibrarian(s, 'timeout');
     await expect(s.lib.fromAmp([3], 0)).rejects.toThrow('librarian_read: the amp did not reply');
   });
+
+  it('refuses a second amp operation while a write is waiting for the amp', async () => {
+    const s = createLibrarySandbox({ names: TEN });
+    const first = s.lib.writePatch(6, 'A');
+    await until(sentTo(s, '7F000104'));
+    await expect(s.lib.writePatch(7, 'B')).rejects.toThrow('transferring data');
+    await expect(s.lib.selectPatch(1)).rejects.toThrow('transferring data');
+    s.reply('7F000104', '0006');
+    await until(sentTo(s, '7F01010A'));
+    s.reply('7F01010A', '4006');
+    expect(await first).toEqual({ row: 6, name: 'A' });
+    expect(await s.lib.selectPatch(1)).toEqual({ current: 1, name: 'CLEAN' });
+  });
+
+  it('stops a timed-out transfer from saving later', async () => {
+    const s = createLibrarySandbox({ names: TEN });
+    s.sb.run('window.__katanaTransferMs = 50');
+    s.sb.run(`(function () {
+      var lib = librarianCommonInfo.librarians[0];
+      lib.read = function () {
+        var self = this;
+        setTimeout(function () { self.broadcast('librarian_read', 'end'); }, 150);
+      };
+    })()`);
+    await expect(s.lib.fromAmp([3], 0)).rejects.toThrow('did not finish within');
+    await new Promise(resolve => setTimeout(resolve, 250));
+    expect((await s.lib.livesets())[0].patches).toHaveLength(0);
+    // The late 'end' must have cleared inFlight, so a later transfer is not blocked forever.
+    instantLibrarian(s);
+    await expect(s.lib.fromAmp([3], 0)).resolves.toMatchObject({ liveset: 'LIVESET 1' });
+  });
 });

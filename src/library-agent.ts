@@ -55,17 +55,49 @@ export const LIBRARY_BODY = String.raw`(function () {
 
   var STEP_MS = 60000, TRANSFER_MS = 180000;
 
+  // Set while an amp transfer this agent started is in flight (e.g. a string like 'Writing the
+  // patch'), covering the gaps librarian().timerId misses: PATCH_WRITE/export waits, toAmp's export
+  // + fetchPatchNames, loadPatch's readEditor. requireIdle() blocks a second overlapping call.
+  var inFlight = null;
+
   function requireAmp() {
     if (window.currentMIDIConnect == null) throw new Error('No KATANA is connected. Connect it with katana_connect first.');
   }
 
   function requireIdle() {
-    if (librarian().timerId) throw new Error('BOSS TONE STUDIO is transferring data; try again in a moment.');
+    if (librarian().timerId || inFlight) throw new Error('BOSS TONE STUDIO is transferring data; try again in a moment.');
   }
 
-  function withTimeout(p, what, ms) {
+  // Marks an amp transfer in flight for requireIdle(), and clears it only when the INNER flow
+  // promise start() returns actually settles (success or failure) - not when an outer timeout
+  // merely gives up on it - so a transfer BTS is still running keeps blocking new ones.
+  function exclusive(what, start) {
+    inFlight = what;
+    function clear() { inFlight = null; }
+    var flow;
+    try {
+      flow = start();
+    } catch (e) {
+      clear();
+      throw e;
+    }
+    flow.then(clear, clear);
+    return flow;
+  }
+
+  // Throws once token.cancelled has been set by withTimeout, so a step after a timed-out flow's
+  // late resolution does not go on to act (save data, unmute, etc.).
+  function check(token) {
+    if (token.cancelled) throw new Error('cancelled after timeout');
+  }
+
+  function withTimeout(p, token, what, ms) {
     return new Promise(function (resolve, reject) {
-      var t = setTimeout(function () { reject(new Error(what + ' did not finish within ' + ms / 1000 + 's.')); }, ms);
+      var t = setTimeout(function () {
+        token.cancelled = true;
+        if (librarian().timerId) librarian().cancel();
+        reject(new Error(what + ' did not finish within ' + ms / 1000 + 's.'));
+      }, ms);
       p.then(function (v) { clearTimeout(t); resolve(v); }, function (e) { clearTimeout(t); reject(e); });
     });
   }
@@ -90,7 +122,12 @@ export const LIBRARY_BODY = String.raw`(function () {
         }
       };
       lib.addObserver(obs);
-      start(lib);
+      try {
+        start(lib);
+      } catch (e) {
+        lib.removeObserver(obs);
+        reject(e);
+      }
     });
   }
 
@@ -207,21 +244,26 @@ export const LIBRARY_BODY = String.raw`(function () {
   // The WRITE dialog's sequence (patchMIDIController.sendPatchName + writePatch) without its dialogs.
   function writePatch(row, name) {
     requireAmp(); requireIdle();
-    var flow = Promise.resolve().then(function () {
-      patchMIDIController.sendPatchName(name);
-      return waitReply(ADDRESS_CONST.COMMAND.PATCH_WRITE, '00' + hex2(row), 'PATCH_WRITE');
-    }).then(function () {
-      return exportCommand([row]);
-    }).then(function () {
-      var names = patchModelController.getUserPatchNames();
-      names[row] = name;
-      patchModelController.updateUserPatchNames(names);
-      patchDOMController.updatePatchSelectPage();
-      patchDOMController.updateCurrentPatchDOM();
-      $('#user-patch-select-menu').trigger('elf-change', row);
-      return { row: row, name: name };
+    var token = { cancelled: false };
+    var flow = exclusive('Writing the patch', function () {
+      return Promise.resolve().then(function () {
+        patchMIDIController.sendPatchName(name);
+        return waitReply(ADDRESS_CONST.COMMAND.PATCH_WRITE, '00' + hex2(row), 'PATCH_WRITE');
+      }).then(function () {
+        check(token);
+        return exportCommand([row]);
+      }).then(function () {
+        check(token);
+        var names = patchModelController.getUserPatchNames();
+        names[row] = name;
+        patchModelController.updateUserPatchNames(names);
+        patchDOMController.updatePatchSelectPage();
+        patchDOMController.updateCurrentPatchDOM();
+        $('#user-patch-select-menu').trigger('elf-change', row);
+        return { row: row, name: name };
+      });
     });
-    return withLoading(withTimeout(flow, 'Writing the patch', STEP_MS));
+    return withLoading(withTimeout(flow, token, 'Writing the patch', window.__katanaStepMs || STEP_MS));
   }
 
   // A LIBRARIAN patch click: preview-mute, temporaryWrite, mirror into the edit buffer, re-read, unmute.
@@ -229,17 +271,24 @@ export const LIBRARY_BODY = String.raw`(function () {
     requireAmp(); requireIdle();
     var l = livesetAt(i), cell = l.cell(0, p), cfg = librarian().config;
     if (!cell) throw new Error('No patch at index ' + p + ' in liveset "' + l.name + '"');
-    var flow = patchMIDIController.sendCommandPreviewMute(1).then(function () {
-      return runLibrarian('librarian_temporaryWrite', function (lib) { lib.temporaryWrite(cell, 0); });
-    }).then(function () {
-      cfg.blockSet.forEach(function (bid) { Parameter.setdata(cfg.temporarySet[bid], cell.paramSet[bid]); });
-      return new Promise(function (resolve) { midiConnectionController.readEditor([0], resolve, resolve); });
-    }).then(function () {
-      if (typeof setupKnobModFxTargetList === 'function') setupKnobModFxTargetList();
-      return { liveset: l.name, patch: patchName(cell) };
+    var token = { cancelled: false };
+    var flow = exclusive('Loading the patch', function () {
+      return patchMIDIController.sendCommandPreviewMute(1).then(function () {
+        check(token);
+        return runLibrarian('librarian_temporaryWrite', function (lib) { lib.temporaryWrite(cell, 0); });
+      }).then(function () {
+        check(token);
+        cfg.blockSet.forEach(function (bid) { Parameter.setdata(cfg.temporarySet[bid], cell.paramSet[bid]); });
+        return new Promise(function (resolve) { midiConnectionController.readEditor([0], resolve, resolve); });
+      }).then(function () {
+        check(token);
+        if (typeof setupKnobModFxTargetList === 'function') setupKnobModFxTargetList();
+        return { liveset: l.name, patch: patchName(cell) };
+      });
     });
-    return withTimeout(flow, 'Loading the patch', STEP_MS)
-      .then(function (v) { unmuteSoon(); return v; }, function (e) { unmuteSoon(); throw e; });
+    // Unmute once the inner flow has actually settled, not when an outer timeout gives up on it.
+    flow.then(unmuteSoon, unmuteSoon);
+    return withTimeout(flow, token, 'Loading the patch', window.__katanaStepMs || STEP_MS);
   }
 
   // librarianServices.exportInst without the read-back and dialogs: copy cells into the amp's
@@ -254,15 +303,19 @@ export const LIBRARY_BODY = String.raw`(function () {
     });
     if (cells.length !== rows.length || !rows.length) throw new Error('Patches and slots must be the same, non-zero count.');
     rows.forEach(function (row, n) { info().instLiveset.replace(0, row, [cells[n]]); });
-    var flow = runLibrarian('librarian_write', function (lib) { lib.write(rows.slice()); })
-      .then(function () { return exportCommand(rows); })
-      .then(function () { return new Promise(function (resolve) { patchMIDIController.fetchPatchNames(resolve, resolve); }); })
-      .then(function () {
-        var cur = patchModelController.getCurrentPatchNum();
-        if (rows.indexOf(cur) >= 0) patchMIDIController.updateCurrentPatch(cur);
-        return { rows: rows, names: cells.map(patchName) };
-      });
-    return withLoading(withTimeout(flow, 'Writing the liveset to the amp', TRANSFER_MS));
+    var token = { cancelled: false };
+    var flow = exclusive('Writing the liveset to the amp', function () {
+      return runLibrarian('librarian_write', function (lib) { lib.write(rows.slice()); })
+        .then(function () { check(token); return exportCommand(rows); })
+        .then(function () { check(token); return new Promise(function (resolve) { patchMIDIController.fetchPatchNames(resolve, resolve); }); })
+        .then(function () {
+          check(token);
+          var cur = patchModelController.getCurrentPatchNum();
+          if (rows.indexOf(cur) >= 0) patchMIDIController.updateCurrentPatch(cur);
+          return { rows: rows, names: cells.map(patchName) };
+        });
+    });
+    return withLoading(withTimeout(flow, token, 'Writing the liveset to the amp', window.__katanaTransferMs || TRANSFER_MS));
   }
 
   // librarianServices.importInst (append mode): read the rows from the amp, copy them into the liveset.
@@ -270,14 +323,18 @@ export const LIBRARY_BODY = String.raw`(function () {
     requireAmp(); requireIdle();
     var l = livesetAt(i);
     if (l.rows(0) + rows.length > info().maxPatchNum) throw new Error('Liveset "' + l.name + '" would exceed ' + info().maxPatchNum + ' patches.');
-    var flow = runLibrarian('librarian_read', function (lib) { lib.read(rows.slice()); }).then(function () {
-      var cells = info().instLiveset.copy(0, rows.slice());
-      l.replace(0, l.rows(0), cells);
-      save(l);
-      redraw();
-      return { liveset: l.name, added: cells.map(patchName) };
+    var token = { cancelled: false };
+    var flow = exclusive('Reading patches from the amp', function () {
+      return runLibrarian('librarian_read', function (lib) { lib.read(rows.slice()); }).then(function () {
+        check(token);
+        var cells = info().instLiveset.copy(0, rows.slice());
+        l.replace(0, l.rows(0), cells);
+        save(l);
+        redraw();
+        return { liveset: l.name, added: cells.map(patchName) };
+      });
     });
-    return withLoading(withTimeout(flow, 'Reading patches from the amp', TRANSFER_MS));
+    return withLoading(withTimeout(flow, token, 'Reading patches from the amp', window.__katanaTransferMs || TRANSFER_MS));
   }
 
   k.lib = {
