@@ -1,0 +1,13 @@
+{
+  "observedAtUtc": "2026-10-23T18:13:16.1958074Z",
+  "devices": [
+    {
+      "Status": "OK",
+      "FriendlyName": "KATANA",
+      "InstanceId": "USB\\VID_0582&PID_01D8\\6&5280D8E&0&1"
+    }
+  ],
+  "conflictingApps": [],
+  "hardwareAccessAuthorized": "Explicit user request: read-only Gen 1 adapter test",
+  "physicalModelBasis": "User-supplied target KATANA-50 Gen 1 and prior operator label evidence; USB identity alone does not prove submodel"
+}

@@ -1,0 +1,8 @@
+{
+  "sha256": {
+    "command.mjs": "31935a21ad62fa2d9850275e2dcb2796c3ff71e1af7ccf8f33fd75614a43f316",
+    "guard.mjs": "4e2bfa2ec0b023cc35761a78c1d086319d28e8e533093ec53df56e2872570607",
+    "mcp-report.json": "a5aef7b2dc30b1e373673646e3749db6f3126a58c3a8f59ae147763a1e0903b7",
+    "midi-audit.jsonl": "d37c8d986e7c9d4eb550b9cc6bec4b61df101ca606a52d3d3abc8bf1436e8bf1"
+  }
+}

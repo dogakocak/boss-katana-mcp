@@ -1,0 +1,86 @@
+{
+  "status": "PASS",
+  "authority": "installed BTS 4.0.0 static definitions; not a hardware range sweep",
+  "swfSha256": "28674f980ae8c854b6888138d86d22c65bfbcc8007d80ae85b89f065b2350480",
+  "addressMapSha256": "57714a40077d200f2cf55e4869b7c0475dcb24a996c77bb54655a2d2131bd7e4",
+  "facts": [
+    {
+      "key": "TemporaryGain",
+      "addressMapName": "PREAMP A: GAIN",
+      "address": "60,00,00,52",
+      "abcId": "preamp_a_gain",
+      "idOpcodeFwsOffset": "0x911477",
+      "rangeStartFwsOffset": "0x91148c",
+      "min": 0,
+      "max": 120,
+      "step": 1
+    },
+    {
+      "key": "TemporaryLevel",
+      "addressMapName": "PREAMP A: LEVEL",
+      "address": "60,00,00,58",
+      "abcId": "preamp_a_level",
+      "idOpcodeFwsOffset": "0x911534",
+      "rangeStartFwsOffset": "0x911549",
+      "min": 0,
+      "max": 100,
+      "step": 1
+    },
+    {
+      "key": "TemporaryBass",
+      "addressMapName": "PREAMP A: BASS",
+      "address": "60,00,00,54",
+      "abcId": "preamp_a_bass",
+      "idOpcodeFwsOffset": "0x9115b2",
+      "rangeStartFwsOffset": "0x9115c7",
+      "min": 0,
+      "max": 100,
+      "step": 1
+    },
+    {
+      "key": "TemporaryMiddle",
+      "addressMapName": "PREAMP A: MIDDLE",
+      "address": "60,00,00,55",
+      "abcId": "preamp_a_middle",
+      "idOpcodeFwsOffset": "0x9115f1",
+      "rangeStartFwsOffset": "0x911606",
+      "min": 0,
+      "max": 100,
+      "step": 1
+    },
+    {
+      "key": "TemporaryTreble",
+      "addressMapName": "PREAMP A: TREBLE",
+      "address": "60,00,00,56",
+      "abcId": "preamp_a_treble",
+      "idOpcodeFwsOffset": "0x911630",
+      "rangeStartFwsOffset": "0x911645",
+      "min": 0,
+      "max": 100,
+      "step": 1
+    },
+    {
+      "key": "TemporaryPresence",
+      "addressMapName": "PREAMP A: PRESENCE",
+      "address": "60,00,00,57",
+      "abcId": "preamp_a_presence",
+      "idOpcodeFwsOffset": "0x91166f",
+      "rangeStartFwsOffset": "0x911684",
+      "min": 0,
+      "max": 100,
+      "step": 1
+    },
+    {
+      "key": "NoiseSuppressorThreshold",
+      "addressMapName": "NS1: THRESHOLD",
+      "address": "60,00,06,64",
+      "abcId": "ns1_threshold",
+      "idOpcodeFwsOffset": "0x91a25d",
+      "rangeStartFwsOffset": "0x91a272",
+      "min": 0,
+      "max": 100,
+      "step": 1
+    }
+  ],
+  "limitations": "Does not establish raw/panel conversion, firmware-wide support, acoustic volume safety or persistence."
+}

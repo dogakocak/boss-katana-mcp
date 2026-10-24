@@ -1,0 +1,392 @@
+{
+  "request": "delay ekle ve reverb",
+  "status": "PASS",
+  "startedAtUtc": "2026-10-23T19:04:20.465Z",
+  "sourceRevision": "c3447953d68612971cc34e261338ce127f6eeb31",
+  "operatorAttestation": {
+    "writesApprovedPreviously": true,
+    "physicalMasterLowConfirmedPreviously": true
+  },
+  "calls": [
+    {
+      "name": "katana_gen1_connect",
+      "arguments": {},
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"backend\": \"gen1-midi\",\n  \"experimental\": true,\n  \"hardwareEnabled\": true,\n  \"connected\": true,\n  \"locked\": false,\n  \"modelConfirmedByOperator\": true,\n  \"firmware\": \"unknown\",\n  \"volumeWrites\": false,\n  \"temporaryLevelWriteCeiling\": 10,\n  \"writesEnabled\": true,\n  \"warning\": \"Cached connection state; physical liveness is checked by explicit I/O. MIDI identity cannot prove KATANA-50 submodel.\"\n}"
+          }
+        ]
+      }
+    },
+    {
+      "name": "katana_gen1_read",
+      "arguments": {
+        "key": "TemporaryLevel",
+        "explicitResearch": true
+      },
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"key\": \"TemporaryLevel\",\n  \"raw\": 5,\n  \"research\": false,\n  \"atomicSnapshot\": false,\n  \"hardwareVerifiedImplementation\": false\n}"
+          }
+        ]
+      }
+    },
+    {
+      "name": "katana_gen1_read",
+      "arguments": {
+        "key": "DelayTime",
+        "explicitResearch": true
+      },
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"key\": \"DelayTime\",\n  \"raw\": 456,\n  \"research\": true,\n  \"atomicSnapshot\": false,\n  \"hardwareVerifiedImplementation\": false\n}"
+          }
+        ]
+      }
+    },
+    {
+      "name": "katana_gen1_read",
+      "arguments": {
+        "key": "DelayFeedback",
+        "explicitResearch": true
+      },
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"key\": \"DelayFeedback\",\n  \"raw\": 35,\n  \"research\": true,\n  \"atomicSnapshot\": false,\n  \"hardwareVerifiedImplementation\": false\n}"
+          }
+        ]
+      }
+    },
+    {
+      "name": "katana_gen1_read",
+      "arguments": {
+        "key": "ReverbLevel",
+        "explicitResearch": true
+      },
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"key\": \"ReverbLevel\",\n  \"raw\": 0,\n  \"research\": true,\n  \"atomicSnapshot\": false,\n  \"hardwareVerifiedImplementation\": false\n}"
+          }
+        ]
+      }
+    },
+    {
+      "name": "katana_gen1_read",
+      "arguments": {
+        "key": "DelayLevel",
+        "explicitResearch": true
+      },
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"key\": \"DelayLevel\",\n  \"raw\": 0,\n  \"research\": false,\n  \"atomicSnapshot\": false,\n  \"hardwareVerifiedImplementation\": false\n}"
+          }
+        ]
+      }
+    },
+    {
+      "name": "katana_gen1_set",
+      "arguments": {
+        "key": "DelayOn",
+        "value": 1
+      },
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"key\": \"DelayOn\",\n  \"before\": 1,\n  \"raw\": 1,\n  \"readbackVerified\": true,\n  \"experimental\": true,\n  \"savedToPatch\": false\n}"
+          }
+        ]
+      }
+    },
+    {
+      "name": "katana_gen1_set",
+      "arguments": {
+        "key": "ReverbOn",
+        "value": 1
+      },
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"key\": \"ReverbOn\",\n  \"before\": 1,\n  \"raw\": 1,\n  \"readbackVerified\": true,\n  \"experimental\": true,\n  \"savedToPatch\": false\n}"
+          }
+        ]
+      }
+    },
+    {
+      "name": "katana_gen1_set",
+      "arguments": {
+        "key": "DelayLevel",
+        "value": 15
+      },
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"key\": \"DelayLevel\",\n  \"before\": 0,\n  \"raw\": 15,\n  \"readbackVerified\": true,\n  \"experimental\": true,\n  \"savedToPatch\": false\n}"
+          }
+        ]
+      }
+    },
+    {
+      "name": "katana_gen1_set",
+      "arguments": {
+        "key": "ReverbLevel",
+        "value": 15
+      },
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"key\": \"ReverbLevel\",\n  \"before\": 0,\n  \"raw\": 15,\n  \"readbackVerified\": true,\n  \"experimental\": true,\n  \"savedToPatch\": false\n}"
+          }
+        ]
+      }
+    },
+    {
+      "name": "katana_gen1_read",
+      "arguments": {
+        "key": "DelayOn",
+        "explicitResearch": true
+      },
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"key\": \"DelayOn\",\n  \"raw\": 1,\n  \"research\": false,\n  \"atomicSnapshot\": false,\n  \"hardwareVerifiedImplementation\": false\n}"
+          }
+        ]
+      }
+    },
+    {
+      "name": "katana_gen1_read",
+      "arguments": {
+        "key": "ReverbOn",
+        "explicitResearch": true
+      },
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"key\": \"ReverbOn\",\n  \"raw\": 1,\n  \"research\": false,\n  \"atomicSnapshot\": false,\n  \"hardwareVerifiedImplementation\": false\n}"
+          }
+        ]
+      }
+    },
+    {
+      "name": "katana_gen1_read",
+      "arguments": {
+        "key": "TemporaryLevel",
+        "explicitResearch": true
+      },
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"key\": \"TemporaryLevel\",\n  \"raw\": 5,\n  \"research\": false,\n  \"atomicSnapshot\": false,\n  \"hardwareVerifiedImplementation\": false\n}"
+          }
+        ]
+      }
+    },
+    {
+      "name": "katana_gen1_read",
+      "arguments": {
+        "key": "DelayLevel",
+        "explicitResearch": true
+      },
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"key\": \"DelayLevel\",\n  \"raw\": 15,\n  \"research\": false,\n  \"atomicSnapshot\": false,\n  \"hardwareVerifiedImplementation\": false\n}"
+          }
+        ]
+      }
+    },
+    {
+      "name": "katana_gen1_read",
+      "arguments": {
+        "key": "ReverbLevel",
+        "explicitResearch": true
+      },
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"key\": \"ReverbLevel\",\n  \"raw\": 15,\n  \"research\": true,\n  \"atomicSnapshot\": false,\n  \"hardwareVerifiedImplementation\": false\n}"
+          }
+        ]
+      }
+    },
+    {
+      "name": "katana_gen1_disconnect",
+      "arguments": {},
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"backend\": \"gen1-midi\",\n  \"experimental\": true,\n  \"hardwareEnabled\": true,\n  \"connected\": false,\n  \"locked\": false,\n  \"modelConfirmedByOperator\": true,\n  \"firmware\": \"unknown\",\n  \"volumeWrites\": false,\n  \"temporaryLevelWriteCeiling\": 10,\n  \"writesEnabled\": true,\n  \"warning\": \"Cached connection state; physical liveness is checked by explicit I/O. MIDI identity cannot prove KATANA-50 submodel.\"\n}"
+          }
+        ]
+      }
+    }
+  ],
+  "failure": null,
+  "cleanupFailure": null,
+  "runnerSha256": "d4cb6dcdde73e4af1d887bd735d7037f4f14e033a5886644253a5f233e529f97",
+  "guardSha256": "ddf99e2868c782a698a46602c6df69969a9b5dceb956a4adf45063fcf4846f39",
+  "stderr": "",
+  "connection": {
+    "backend": "gen1-midi",
+    "experimental": true,
+    "hardwareEnabled": true,
+    "connected": true,
+    "locked": false,
+    "modelConfirmedByOperator": true,
+    "firmware": "unknown",
+    "volumeWrites": false,
+    "temporaryLevelWriteCeiling": 10,
+    "writesEnabled": true,
+    "warning": "Cached connection state; physical liveness is checked by explicit I/O. MIDI identity cannot prove KATANA-50 submodel."
+  },
+  "settings": {
+    "TemporaryLevel": {
+      "key": "TemporaryLevel",
+      "raw": 5,
+      "research": false,
+      "atomicSnapshot": false,
+      "hardwareVerifiedImplementation": false
+    },
+    "DelayTime": {
+      "key": "DelayTime",
+      "raw": 456,
+      "research": true,
+      "atomicSnapshot": false,
+      "hardwareVerifiedImplementation": false
+    },
+    "DelayFeedback": {
+      "key": "DelayFeedback",
+      "raw": 35,
+      "research": true,
+      "atomicSnapshot": false,
+      "hardwareVerifiedImplementation": false
+    },
+    "ReverbLevel": {
+      "key": "ReverbLevel",
+      "raw": 0,
+      "research": true,
+      "atomicSnapshot": false,
+      "hardwareVerifiedImplementation": false
+    },
+    "DelayLevel": {
+      "key": "DelayLevel",
+      "raw": 0,
+      "research": false,
+      "atomicSnapshot": false,
+      "hardwareVerifiedImplementation": false
+    }
+  },
+  "delay": {
+    "key": "DelayOn",
+    "before": 1,
+    "raw": 1,
+    "readbackVerified": true,
+    "experimental": true,
+    "savedToPatch": false
+  },
+  "reverb": {
+    "key": "ReverbOn",
+    "before": 1,
+    "raw": 1,
+    "readbackVerified": true,
+    "experimental": true,
+    "savedToPatch": false
+  },
+  "delayLevel": {
+    "key": "DelayLevel",
+    "before": 0,
+    "raw": 15,
+    "readbackVerified": true,
+    "experimental": true,
+    "savedToPatch": false
+  },
+  "reverbLevel": {
+    "key": "ReverbLevel",
+    "before": 0,
+    "raw": 15,
+    "readbackVerified": true,
+    "experimental": true,
+    "savedToPatch": false
+  },
+  "final": {
+    "DelayOn": {
+      "key": "DelayOn",
+      "raw": 1,
+      "research": false,
+      "atomicSnapshot": false,
+      "hardwareVerifiedImplementation": false
+    },
+    "ReverbOn": {
+      "key": "ReverbOn",
+      "raw": 1,
+      "research": false,
+      "atomicSnapshot": false,
+      "hardwareVerifiedImplementation": false
+    },
+    "TemporaryLevel": {
+      "key": "TemporaryLevel",
+      "raw": 5,
+      "research": false,
+      "atomicSnapshot": false,
+      "hardwareVerifiedImplementation": false
+    },
+    "DelayLevel": {
+      "key": "DelayLevel",
+      "raw": 15,
+      "research": false,
+      "atomicSnapshot": false,
+      "hardwareVerifiedImplementation": false
+    },
+    "ReverbLevel": {
+      "key": "ReverbLevel",
+      "raw": 15,
+      "research": true,
+      "atomicSnapshot": false,
+      "hardwareVerifiedImplementation": false
+    }
+  },
+  "disconnected": {
+    "backend": "gen1-midi",
+    "experimental": true,
+    "hardwareEnabled": true,
+    "connected": false,
+    "locked": false,
+    "modelConfirmedByOperator": true,
+    "firmware": "unknown",
+    "volumeWrites": false,
+    "temporaryLevelWriteCeiling": 10,
+    "writesEnabled": true,
+    "warning": "Cached connection state; physical liveness is checked by explicit I/O. MIDI identity cannot prove KATANA-50 submodel."
+  },
+  "audit": {
+    "sha256": "e0676644ca41e9af7e93a7b81138152b9f0a291490932274d28bb3ff54b175ea",
+    "identity": 1,
+    "rq1": 18,
+    "dt1": 2,
+    "blocked": 0,
+    "rx": 19
+  },
+  "completedAtUtc": "2026-10-23T19:04:21.297Z"
+}

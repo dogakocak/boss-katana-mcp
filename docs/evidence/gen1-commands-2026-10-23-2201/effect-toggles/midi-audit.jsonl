@@ -1,0 +1,41 @@
+{"sequence":1,"timeUtc":"2026-10-23T19:02:48.864Z","direction":"GUARD_READY","mode":"enable-delay-reverb-only"}
+{"sequence":2,"timeUtc":"2026-10-23T19:02:49.179Z","direction":"TX_ATTEMPT","key":"Identity","kind":"identity","hex":"F0 7E 7F 06 01 F7"}
+{"sequence":3,"timeUtc":"2026-10-23T19:02:49.181Z","direction":"TX_NATIVE_RETURNED","key":"Identity","kind":"identity","hex":"F0 7E 7F 06 01 F7"}
+{"sequence":4,"timeUtc":"2026-10-23T19:02:49.182Z","direction":"RX","hex":"F0 7E 00 06 02 41 33 03 00 00 00 00 00 00 F7"}
+{"sequence":5,"timeUtc":"2026-10-23T19:02:49.187Z","direction":"TX_ATTEMPT","key":"TemporaryLevel","kind":"read","hex":"F0 41 00 00 00 00 33 11 60 00 00 58 00 00 00 01 47 F7"}
+{"sequence":6,"timeUtc":"2026-10-23T19:02:49.188Z","direction":"TX_NATIVE_RETURNED","key":"TemporaryLevel","kind":"read","hex":"F0 41 00 00 00 00 33 11 60 00 00 58 00 00 00 01 47 F7"}
+{"sequence":7,"timeUtc":"2026-10-23T19:02:49.189Z","direction":"RX","hex":"F0 41 00 00 00 00 33 12 60 00 00 58 05 43 F7"}
+{"sequence":8,"timeUtc":"2026-10-23T19:02:49.191Z","direction":"TX_ATTEMPT","key":"DelayTime","kind":"read","hex":"F0 41 00 00 00 00 33 11 60 00 05 62 00 00 00 02 37 F7"}
+{"sequence":9,"timeUtc":"2026-10-23T19:02:49.192Z","direction":"TX_NATIVE_RETURNED","key":"DelayTime","kind":"read","hex":"F0 41 00 00 00 00 33 11 60 00 05 62 00 00 00 02 37 F7"}
+{"sequence":10,"timeUtc":"2026-10-23T19:02:49.210Z","direction":"RX","hex":"F0 41 00 00 00 00 33 12 60 00 05 62 03 48 6E F7"}
+{"sequence":11,"timeUtc":"2026-10-23T19:02:49.214Z","direction":"TX_ATTEMPT","key":"DelayFeedback","kind":"read","hex":"F0 41 00 00 00 00 33 11 60 00 05 64 00 00 00 01 36 F7"}
+{"sequence":12,"timeUtc":"2026-10-23T19:02:49.214Z","direction":"TX_NATIVE_RETURNED","key":"DelayFeedback","kind":"read","hex":"F0 41 00 00 00 00 33 11 60 00 05 64 00 00 00 01 36 F7"}
+{"sequence":13,"timeUtc":"2026-10-23T19:02:49.232Z","direction":"RX","hex":"F0 41 00 00 00 00 33 12 60 00 05 64 23 14 F7"}
+{"sequence":14,"timeUtc":"2026-10-23T19:02:49.235Z","direction":"TX_ATTEMPT","key":"ReverbLevel","kind":"read","hex":"F0 41 00 00 00 00 33 11 60 00 06 18 00 00 00 01 01 F7"}
+{"sequence":15,"timeUtc":"2026-10-23T19:02:49.236Z","direction":"TX_NATIVE_RETURNED","key":"ReverbLevel","kind":"read","hex":"F0 41 00 00 00 00 33 11 60 00 06 18 00 00 00 01 01 F7"}
+{"sequence":16,"timeUtc":"2026-10-23T19:02:49.254Z","direction":"RX","hex":"F0 41 00 00 00 00 33 12 60 00 06 18 00 02 F7"}
+{"sequence":17,"timeUtc":"2026-10-23T19:02:49.258Z","direction":"TX_ATTEMPT","key":"DelayOn","kind":"read","hex":"F0 41 00 00 00 00 33 11 60 00 05 60 00 00 00 01 3A F7"}
+{"sequence":18,"timeUtc":"2026-10-23T19:02:49.258Z","direction":"TX_NATIVE_RETURNED","key":"DelayOn","kind":"read","hex":"F0 41 00 00 00 00 33 11 60 00 05 60 00 00 00 01 3A F7"}
+{"sequence":19,"timeUtc":"2026-10-23T19:02:49.276Z","direction":"RX","hex":"F0 41 00 00 00 00 33 12 60 00 05 60 00 3B F7"}
+{"sequence":20,"timeUtc":"2026-10-23T19:02:49.277Z","direction":"TX_ATTEMPT","key":"DelayOn","kind":"write","hex":"F0 41 00 00 00 00 33 12 60 00 05 60 01 3A F7"}
+{"sequence":21,"timeUtc":"2026-10-23T19:02:49.278Z","direction":"TX_NATIVE_RETURNED","key":"DelayOn","kind":"write","hex":"F0 41 00 00 00 00 33 12 60 00 05 60 01 3A F7"}
+{"sequence":22,"timeUtc":"2026-10-23T19:02:49.278Z","direction":"TX_ATTEMPT","key":"DelayOn","kind":"read","hex":"F0 41 00 00 00 00 33 11 60 00 05 60 00 00 00 01 3A F7"}
+{"sequence":23,"timeUtc":"2026-10-23T19:02:49.279Z","direction":"TX_NATIVE_RETURNED","key":"DelayOn","kind":"read","hex":"F0 41 00 00 00 00 33 11 60 00 05 60 00 00 00 01 3A F7"}
+{"sequence":24,"timeUtc":"2026-10-23T19:02:49.299Z","direction":"RX","hex":"F0 41 00 00 00 00 33 12 60 00 05 60 01 3A F7"}
+{"sequence":25,"timeUtc":"2026-10-23T19:02:49.301Z","direction":"TX_ATTEMPT","key":"ReverbOn","kind":"read","hex":"F0 41 00 00 00 00 33 11 60 00 06 10 00 00 00 01 09 F7"}
+{"sequence":26,"timeUtc":"2026-10-23T19:02:49.302Z","direction":"TX_NATIVE_RETURNED","key":"ReverbOn","kind":"read","hex":"F0 41 00 00 00 00 33 11 60 00 06 10 00 00 00 01 09 F7"}
+{"sequence":27,"timeUtc":"2026-10-23T19:02:49.320Z","direction":"RX","hex":"F0 41 00 00 00 00 33 12 60 00 06 10 00 0A F7"}
+{"sequence":28,"timeUtc":"2026-10-23T19:02:49.321Z","direction":"TX_ATTEMPT","key":"ReverbOn","kind":"write","hex":"F0 41 00 00 00 00 33 12 60 00 06 10 01 09 F7"}
+{"sequence":29,"timeUtc":"2026-10-23T19:02:49.322Z","direction":"TX_NATIVE_RETURNED","key":"ReverbOn","kind":"write","hex":"F0 41 00 00 00 00 33 12 60 00 06 10 01 09 F7"}
+{"sequence":30,"timeUtc":"2026-10-23T19:02:49.322Z","direction":"TX_ATTEMPT","key":"ReverbOn","kind":"read","hex":"F0 41 00 00 00 00 33 11 60 00 06 10 00 00 00 01 09 F7"}
+{"sequence":31,"timeUtc":"2026-10-23T19:02:49.323Z","direction":"TX_NATIVE_RETURNED","key":"ReverbOn","kind":"read","hex":"F0 41 00 00 00 00 33 11 60 00 06 10 00 00 00 01 09 F7"}
+{"sequence":32,"timeUtc":"2026-10-23T19:02:49.343Z","direction":"RX","hex":"F0 41 00 00 00 00 33 12 60 00 06 10 01 09 F7"}
+{"sequence":33,"timeUtc":"2026-10-23T19:02:49.345Z","direction":"TX_ATTEMPT","key":"DelayOn","kind":"read","hex":"F0 41 00 00 00 00 33 11 60 00 05 60 00 00 00 01 3A F7"}
+{"sequence":34,"timeUtc":"2026-10-23T19:02:49.346Z","direction":"TX_NATIVE_RETURNED","key":"DelayOn","kind":"read","hex":"F0 41 00 00 00 00 33 11 60 00 05 60 00 00 00 01 3A F7"}
+{"sequence":35,"timeUtc":"2026-10-23T19:02:49.364Z","direction":"RX","hex":"F0 41 00 00 00 00 33 12 60 00 05 60 01 3A F7"}
+{"sequence":36,"timeUtc":"2026-10-23T19:02:49.367Z","direction":"TX_ATTEMPT","key":"ReverbOn","kind":"read","hex":"F0 41 00 00 00 00 33 11 60 00 06 10 00 00 00 01 09 F7"}
+{"sequence":37,"timeUtc":"2026-10-23T19:02:49.368Z","direction":"TX_NATIVE_RETURNED","key":"ReverbOn","kind":"read","hex":"F0 41 00 00 00 00 33 11 60 00 06 10 00 00 00 01 09 F7"}
+{"sequence":38,"timeUtc":"2026-10-23T19:02:49.386Z","direction":"RX","hex":"F0 41 00 00 00 00 33 12 60 00 06 10 01 09 F7"}
+{"sequence":39,"timeUtc":"2026-10-23T19:02:49.389Z","direction":"TX_ATTEMPT","key":"TemporaryLevel","kind":"read","hex":"F0 41 00 00 00 00 33 11 60 00 00 58 00 00 00 01 47 F7"}
+{"sequence":40,"timeUtc":"2026-10-23T19:02:49.389Z","direction":"TX_NATIVE_RETURNED","key":"TemporaryLevel","kind":"read","hex":"F0 41 00 00 00 00 33 11 60 00 00 58 00 00 00 01 47 F7"}
+{"sequence":41,"timeUtc":"2026-10-23T19:02:49.408Z","direction":"RX","hex":"F0 41 00 00 00 00 33 12 60 00 00 58 05 43 F7"}
